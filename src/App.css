@@ -1,6 +1,5 @@
 #root {
   margin: 0 auto;
-  text-align: center;
 }
 
 .logo {
@@ -37,4 +36,22 @@
 
 .read-the-docs {
   color: #888;
+}
+
+.project-card {
+  width: 90vw;
+  height: auto;
+  margin: 1rem;
+}
+
+.project-image {
+   width: 100%;
+   height: auto;
+   margin: 0;
+   margin-bottom: -20px;
+   border-radius: 15px;
+   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.project-image:hover {
+  transform: rotate(-2deg) scale(1.08); 
 }
