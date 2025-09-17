@@ -2,7 +2,7 @@ import { createTheme, ThemeProvider, CssBaseline, Container, Box, Typography, Pa
 import { FaJava, FaHtml5, FaNodeJs, FaAws,FaGithub,FaDocker } from "react-icons/fa";
 import { IoLogoFirebase } from "react-icons/io5";
 import { SiReact, SiJavascript, SiTypescript, SiJquery, SiSass,SiExpress, SiTailwindcss, SiPython, SiBitbucket,SiBabel, SiFlutter } from 'react-icons/si';
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import TextType from './components/TextType';
 import DarkVeil from './components/DarkVeil';
 import DotGrid from './components/DotGrid';
@@ -22,6 +22,7 @@ import project2 from './assets/projects/project2.png';
 import project3 from './assets/projects/project3.png';
 import project4 from './assets/projects/project4.png';
 import project5 from './assets/projects/project5.png';
+import project6 from './assets/projects/project6.png';
 import './App.css';
 
 // Gfont
@@ -77,7 +78,101 @@ const logos = [
   { node: <SiBabel />, title: "Babel" } 
 ];
 
+const projectCards = [
+  {
+    img: project1,
+    title: "GM LIVE",
+    description: "",
+    points: [
+      "Developed and maintained a robust Content Management System leveraging Typescript, React, Flutter and Firebase.", 
+      "Implemented scalable and efficient front-end components to enhance user experience and streamline content management workflows.", 
+      "Utilized Firebase and Google Cloud Platform services to deploy and manage the CMS, ensuring high availability and performance."
+    ],
+    link: "NA"
+  },
+  {
+    img: project2,
+    title: "3400rs",
+    description: "Popular page among the OldSchool Runescape Community used to display and track a users accomplishments as well as leaderboards.",
+    points: [
+      "Built with React, Material UI, Bookeo",
+      "I created the website and implemented a booking system for users to easily enroll in courses."
+    ],
+    link: "https://firstaidconnect.ca/"
+  },
+  {
+    img: project3,
+    title: "BigDog CMS",
+    description: "Popular page among the OldSchool Runescape Community used to display and track a users accomplishments as well as leaderboards through pulling data from an API allocated to store users data.",
+    points: [
+      "Built with React & TypeScript",
+      "Massaging and manipulating data returned from an external API to display user-centric information."
+    ],
+    link: "https://3400rs.pages.dev"
+  },
+  {
+    img: project4,
+    title: "First Aid Connect",
+    description: "First Aid Connect offers certified first aid training in Ottawa, with flexible courses for individuals and workplaces. I created the website and implemented a booking system for users to easily enroll in courses.",
+    points: [
+      "Built with React, Material UI, Bookeo",
+      "I created the website and implemented a booking system for users to easily enroll in courses."
+    ],
+    link: "https://firstaidconnect.ca/"
+  },
+  {
+    img: project5,
+    title: "Portfolio",
+    description: "Personal portfolio website showcasing my projects, skills, and experience. Built with React and Material-UI.",
+    points: [
+      "Built with React, TypeScript, Material UI, Framer Motion"
+    ],
+    link: "https://firstaidconnect.ca/"
+  },
+    {
+    img: project6,
+    title: "Portfolio",
+    description: "Personal portfolio website showcasing my projects, skills, and experience. Built with React and Material-UI.",
+    points: [
+      "Built with React, TypeScript, Material UI, Framer Motion"
+    ],
+    link: "https://firstaidconnect.ca/"
+  }
+];
+
 const App: React.FC = () => {
+  const [focusedIndex, setFocusedIndex] = useState(0);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const handleScroll = () => {
+    const container = document.getElementById('scrollable-card-box');
+    if (!container) return;
+    let minDistance = Infinity;
+    let topIndex = 0;
+    cardRefs.current.forEach((ref, idx) => {
+      if (ref) {
+        const rect = ref.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+        const distance = Math.abs(rect.top - containerRect.top);
+        if (distance < minDistance) {
+          minDistance = distance;
+          topIndex = idx;
+        }
+      }
+    });
+    setFocusedIndex(topIndex);
+  };
+
+  // Attach scroll event
+  useEffect(() => {
+    const container = document.getElementById('scrollable-card-box');
+    if (!container) return;
+    container.addEventListener('scroll', handleScroll);
+    // Initial check
+    handleScroll();
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -102,7 +197,7 @@ const App: React.FC = () => {
       </Box>
       <Container maxWidth={false} disableGutters sx={{ p: 0, m: 0, height: '100vh', overflowY: 'auto', scrollSnapType: 'y mandatory' }}>
         {/* Welcome Section */}
-        <Box id="Home" sx={{ minHeight: '100vh', width: '100vw', bgcolor: theme.palette.primary.dark, color: theme.palette.primary.contrastText, position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', scrollSnapAlign: 'start' }}>
+        <Box id="Home" sx={{ overflow: 'hidden', minHeight: '100vh', width: '100vw', bgcolor: theme.palette.primary.dark, color: theme.palette.primary.contrastText, position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', scrollSnapAlign: 'start' }}>
           {/* Background */}
           <Box sx={{ position: 'absolute', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 0 }}>
             <DarkVeil />
@@ -153,7 +248,7 @@ const App: React.FC = () => {
         </Box>
 
         {/* Experience Section */}
-        <Box id="Experience" sx={{ minHeight: '100vh', width: '100vw', bgcolor: theme.palette.primary.main, color: theme.palette.text.primary, position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', scrollSnapAlign: 'start' }}>
+        <Box id="Experience" sx={{ overflow: 'hidden', minHeight: '100vh', width: '100vw', bgcolor: theme.palette.primary.main, color: theme.palette.text.primary, position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', scrollSnapAlign: 'start' }}>
           {/* Background */}
           <Box sx={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
           <Waves
@@ -288,81 +383,59 @@ const App: React.FC = () => {
             />
           </Box>
 
-          <Box sx={{ position: 'relative', zIndex: 1, textAlign: 'center', width: '80%', mt: 15 }}>
-
-          <Box sx={{display: 'flex'}}>
-            <SpotlightCard spotlightColor="rgba(94, 46, 196, 0.2)" className="project-card">
-            <Typography variant="h2"> 3400rs</Typography>
-              <img src={project1} alt="Project 1" className="project-image"/>
-            </SpotlightCard>
-            <Box>
-            <Box sx={{display: 'flex'}}>
-              <Box sx={{ height: 5, bgcolor: '#232323', my: 2, ml: '20px', borderRadius: 1, width: '100px', alignSelf: 'flex-start', mr: 2 }} />
-              <Typography variant="h2"> 3400rs</Typography>
-            </Box>
-            <Typography variant="body2">Popular page among the OldSchool Runescape Community used to display and track a users accomplishments as well as leaderboards through pulling data from an API allocated to store users data. </Typography>              
-            <Button variant="contained" color="secondary" sx={{ mt: 2, width: '50%' }} onClick={() => window.open("https://3400rs.pages.dev", "_blank")}>View</Button>
-            </Box>
-          </Box>
-
-
-
-          {/* <Grid container spacing={2} justifyContent="left" sx={{display: 'flex'}}>
-            {/* Project Cards */}
-            {/* 
-
-            <SpotlightCard spotlightColor="rgba(46, 76, 196, 0.2)" className="project-card">
-              <img src={project2} alt="Project 2" style={{ width: '100%', height: 'auto', margin: 1, borderRadius: '8px' }} />
-              <Typography variant="h6">First Aid Connect</Typography>
-              <Typography variant="body2">First Aid Connect offers certified first aid training in Ottawa, with flexible courses for individuals and workplaces. I created the website and implemented a booking system for users to easily enroll in courses.</Typography>
-              <Button variant="contained" color="secondary" sx={{ mt: 2, width: '50%' }} onClick={() => window.open("https://https://firstaidconnect.ca/", "_blank")}>View</Button>
-            </SpotlightCard>
-
-            <SpotlightCard spotlightColor="rgba(46, 196, 154, 0.2)" className="project-card">
-              <img src={project3} alt="Project 3" style={{ width: '100%', height: 'auto', margin: 1, borderRadius: '8px' }} />
-              <Typography variant="h6">BD Cms</Typography>
-              <Typography variant="body2">Popular page among the OldSchool Runescape Community used to display and track a users accomplishments as well as leaderboards through pulling data from an API allocated to store users data. </Typography>
-              <Button variant="contained" color="secondary" sx={{ mt: 2, width: '50%' }} onClick={() => window.open("https://3400rs.pages.dev", "_blank")}>View</Button>
-            </SpotlightCard>
-            
-            <SpotlightCard spotlightColor="rgba(196, 46, 46, 0.2)" className="project-card">
-              <img src={project4} alt="Project 4" style={{ width: '100%', height: 'auto', margin: 1, borderRadius: '8px' }} />
-              <Typography variant="h6">Java RuneLite Plugins</Typography>
-              <Typography variant="body2">Personal portfolio website showcasing my projects, skills, and experience. Built with React and Material-UI.</Typography>
-              <Button variant="contained" color="secondary" sx={{ mt: 2, width: '50%' }} onClick={() => window.open("https://3400rs.pages.dev", "_blank")}>View</Button>
-            </SpotlightCard>
-            <SpotlightCard spotlightColor="rgba(196, 46, 46, 0.2)" className="project-card">
-              <img src={project5} alt="Project 5" style={{ width: '100%', height: 'auto', margin: 1, borderRadius: '8px' }} />
-              <Typography variant="h6">adamgustin</Typography>
-              <Typography variant="body2">Personal portfolio website showcasing my projects, skills, and experience. Built with React and Material-UI.</Typography>
-            </SpotlightCard>
-          </Grid> */}
-          
-
-
-
-
-              {/* Page Scrolling Cards */}
-              {/* <div style={{ height: '500px', position: 'absolute' }}>
-                <CardSwap
-                  cardDistance={60}
-                  height={'fit-content'}
-                  width={'50vw'}
-                  verticalDistance={70}
-                  delay={2000}
-                  pauseOnHover={false}
+          <Box sx={{ display: 'flex', position: 'relative', zIndex: 1, maxWidth: '1280px', mt: 15 }}>
+            {/* Scrollable Cards */}
+            <Box
+              id="scrollable-card-box"
+              sx={{
+                height: '100vw',
+                overflowY: 'auto',
+                width: '60vw',
+                scrollbarWidth: 0,
+                '&::-webkit-scrollbar': { display: 'none' }, 
+                overflowX: 'hidden',
+                display: 'flex',
+                flexDirection: 'column',
+                scrollSnapType: 'y mandatory',
+              }}
+            >
+              {projectCards.map((project, idx) => (
+                <div
+                  key={idx}
+                  data-index={idx}
+                  ref={el => { cardRefs.current[idx] = el; }}
+                  style={{ padding: 12, scrollSnapAlign: 'start' }}
                 >
-                  <Card>
-                    <img src={project1} alt="Project 1" style={{ width: '100%', height: 'auto', maxWidth: '100%', borderRadius: '8px', objectFit: 'cover' }} />
-                  </Card>
-                  <Card>
-                    <img src={project2} alt="Project 2" style={{ width: '100%', height: 'auto', margin: 3, borderRadius: '8px' }} />
-                  </Card>
-                  <Card>
-                    <img src={project3} alt="Project 3" style={{ width: '100%', height: 'auto', margin: 3, borderRadius: '8px' }} />
-                  </Card>
-                </CardSwap>
-              </div> */}
+                  <SpotlightCard spotlightColor="rgba(94, 46, 196, 0.2)" className="project-card">
+                    <Typography variant="h2" sx={{ mb: 2, fontWeight: 700, textAlign: 'center' }}>{project.title}</Typography>
+                    <img src={project.img} alt={project.title} className="project-image"/>
+                  </SpotlightCard>
+                </div>
+              ))}
+            {/* Add extra space at the bottom for two cards */}
+            </Box>
+
+            {/* Fixed Information per card */}
+            <Box sx={{
+              position: 'sticky',
+              top: 40,
+              alignSelf: 'flex-start',
+              maxWidth: '400px',
+              zIndex: 20,
+              mt: 3
+            }}>
+              <Typography variant="h3" sx={{fontWeight: 700}}>{projectCards[focusedIndex].title}</Typography>
+              <Typography variant="body1" sx={{mb: 3}}>{projectCards[focusedIndex].description}</Typography>
+              {projectCards[focusedIndex].points.map((point, idx) => (
+                <Box key={idx} sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                  <Box sx={{ width: 10, height: 10, bgcolor: theme.palette.secondary.main, borderRadius: '10px', mr: 2 }} />
+                  <Typography variant="body1" sx={{ fontWeight: 500 }}>{point}</Typography>
+                </Box>
+              ))}
+              {projectCards[focusedIndex].link !== "NA" && (
+                <Button variant="contained" color="secondary" sx={{ mt: 2, width: '50%' }} onClick={() => window.open(projectCards[focusedIndex].link, "_blank")}>View</Button>
+              )}
+            </Box>
           </Box>
         </Box>
 
@@ -394,7 +467,7 @@ const App: React.FC = () => {
           </GlassSurface>
         </Box>
 
-        <GradualBlur 
+        {/* <GradualBlur 
           target="page"
           position="bottom"
           height="10rem"
@@ -403,7 +476,7 @@ const App: React.FC = () => {
           curve="bezier"
           exponential={true}
           opacity={0.7}
-        />
+        /> */}
       </Container>      
     </ThemeProvider>
   );

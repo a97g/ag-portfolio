@@ -39,7 +39,7 @@
 }
 
 .project-card {
-  width: 90vw;
+  width: auto;
   height: auto;
   margin: 1rem;
 }
