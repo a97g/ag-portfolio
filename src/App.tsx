@@ -82,7 +82,7 @@ const projectCards = [
   {
     img: project1,
     title: "GM LIVE",
-    description: "",
+    description: "GM LIVE was a Content Management System built for General Motors to manage and streamline their digital one-to-one customer video tours and experiences as well as providing a platform for their sales team to manage and organize their customer interactions.",
     points: [
       "Developed and maintained a robust Content Management System leveraging Typescript, React, Flutter and Firebase.", 
       "Implemented scalable and efficient front-end components to enhance user experience and streamline content management workflows.", 
@@ -95,22 +95,12 @@ const projectCards = [
     title: "3400rs",
     description: "Popular page among the OldSchool Runescape Community used to display and track a users accomplishments as well as leaderboards.",
     points: [
-      "Built with React, Material UI, Bookeo",
-      "I created the website and implemented a booking system for users to easily enroll in courses."
+      "Built with React, Material UI, Bookeo.",
+      "Massaging and manipulating data returned from an external API to display user-centric information."
     ],
     link: "https://firstaidconnect.ca/"
   },
-  {
-    img: project3,
-    title: "BigDog CMS",
-    description: "Popular page among the OldSchool Runescape Community used to display and track a users accomplishments as well as leaderboards through pulling data from an API allocated to store users data.",
-    points: [
-      "Built with React & TypeScript",
-      "Massaging and manipulating data returned from an external API to display user-centric information."
-    ],
-    link: "https://3400rs.pages.dev"
-  },
-  {
+    {
     img: project4,
     title: "First Aid Connect",
     description: "First Aid Connect offers certified first aid training in Ottawa, with flexible courses for individuals and workplaces. I created the website and implemented a booking system for users to easily enroll in courses.",
@@ -121,22 +111,42 @@ const projectCards = [
     link: "https://firstaidconnect.ca/"
   },
   {
+    img: project3,
+    title: "Java Plugins",
+    description: "Large suite of proprietary Java based plugins for OldSchool Runescape third-party client RuneLite.",
+    points: [
+      "Built with Java & RuneLite API.",
+      "Aimed to create custom features & enhancements to improve user experience and provide additional functionalities."
+    ],
+    link: "NA"
+  },
+  {
+    img: project6,
+    title: "BigDog CMS",
+    description: "Discord.JS integrated bot & web dashboard for managing a Discord community. Allowing users to submit their own ranking information and have it displayed neatly on a web dashboard.",
+    points: [
+      "Built with React, TypeScript, Material UI, Firestore Database.",
+      "Features Role Management, Custom Commands, Submission Approval."
+    ],
+    link: "NA"
+  },
+  {
     img: project5,
     title: "Portfolio",
     description: "Personal portfolio website showcasing my projects, skills, and experience. Built with React and Material-UI.",
     points: [
       "Built with React, TypeScript, Material UI, Framer Motion"
     ],
-    link: "https://firstaidconnect.ca/"
+    link: "NA"
   },
     {
-    img: project6,
-    title: "Portfolio",
-    description: "Personal portfolio website showcasing my projects, skills, and experience. Built with React and Material-UI.",
+    img: null,
+    title: null,
+    description: null,
     points: [
-      "Built with React, TypeScript, Material UI, Framer Motion"
+      null
     ],
-    link: "https://firstaidconnect.ca/"
+    link: "NA"
   }
 ];
 
@@ -176,7 +186,7 @@ const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{ position: 'fixed', top: 20, left: 0, width: '100vw', display: 'flex', justifyContent: 'center', backgroundColor: 'transparent', zIndex: 10, 
+      <Box sx={{ position: 'fixed', top: 20, left: 0, width: '100vw', display: 'flex', justifyContent: 'center', backgroundColor: 'transparent', zIndex: 1000, 
         '@media (max-width:800px)': { display: 'none' } }}>
         <GlassSurface
           width={550}
@@ -197,7 +207,7 @@ const App: React.FC = () => {
       </Box>
       <Container maxWidth={false} disableGutters sx={{ p: 0, m: 0, height: '100vh', overflowY: 'auto', scrollSnapType: 'y mandatory' }}>
         {/* Welcome Section */}
-        <Box id="Home" sx={{ overflow: 'hidden', minHeight: '100vh', width: '100vw', bgcolor: theme.palette.primary.dark, color: theme.palette.primary.contrastText, position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', scrollSnapAlign: 'start' }}>
+        <Box id="Home" sx={{ minHeight: '100vh', width: '100vw', bgcolor: theme.palette.primary.dark, color: theme.palette.primary.contrastText, position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', scrollSnapAlign: 'start' }}>
           {/* Background */}
           <Box sx={{ position: 'absolute', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 0 }}>
             <DarkVeil />
@@ -382,17 +392,26 @@ const App: React.FC = () => {
               rotation={0}
             />
           </Box>
-
-          <Box sx={{ display: 'flex', position: 'relative', zIndex: 1, maxWidth: '1280px', mt: 15 }}>
+          
+          <Typography variant="h3" gutterBottom sx={{ alignSelf: 'flex-start', textAlign: 'center', mx: 'auto', fontWeight: 700, mt: 18}}>
+            <BlurText
+              text="Projects"
+              delay={150}
+              animateBy="letters"
+              direction="top"
+            />
+          </Typography>
+          <Box sx={{ display: 'flex', position: 'relative', zIndex: 1, maxWidth: '1280px', mt: 2 }}>
             {/* Scrollable Cards */}
             <Box
               id="scrollable-card-box"
               sx={{
                 height: '100vw',
                 overflowY: 'auto',
-                width: '60vw',
+                width: '50vw',
                 scrollbarWidth: 0,
                 '&::-webkit-scrollbar': { display: 'none' }, 
+                scrollbarColor: 'transparent transparent',
                 overflowX: 'hidden',
                 display: 'flex',
                 flexDirection: 'column',
@@ -406,13 +425,15 @@ const App: React.FC = () => {
                   ref={el => { cardRefs.current[idx] = el; }}
                   style={{ padding: 12, scrollSnapAlign: 'start' }}
                 >
+                  {project.img !== null ? (
                   <SpotlightCard spotlightColor="rgba(94, 46, 196, 0.2)" className="project-card">
-                    <Typography variant="h2" sx={{ mb: 2, fontWeight: 700, textAlign: 'center' }}>{project.title}</Typography>
+                    <Typography variant="h2" sx={{ mb: 4, fontWeight: 700, textAlign: 'center' }}>{project.title}</Typography>
                     <img src={project.img} alt={project.title} className="project-image"/>
                   </SpotlightCard>
+                  ) : <Box sx={{height: '55vh'}}/>}
+
                 </div>
               ))}
-            {/* Add extra space at the bottom for two cards */}
             </Box>
 
             {/* Fixed Information per card */}
@@ -420,21 +441,24 @@ const App: React.FC = () => {
               position: 'sticky',
               top: 40,
               alignSelf: 'flex-start',
+              display: 'flex',
               maxWidth: '400px',
               zIndex: 20,
               mt: 3
             }}>
-              <Typography variant="h3" sx={{fontWeight: 700}}>{projectCards[focusedIndex].title}</Typography>
-              <Typography variant="body1" sx={{mb: 3}}>{projectCards[focusedIndex].description}</Typography>
-              {projectCards[focusedIndex].points.map((point, idx) => (
-                <Box key={idx} sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                  <Box sx={{ width: 10, height: 10, bgcolor: theme.palette.secondary.main, borderRadius: '10px', mr: 2 }} />
-                  <Typography variant="body1" sx={{ fontWeight: 500 }}>{point}</Typography>
-                </Box>
-              ))}
-              {projectCards[focusedIndex].link !== "NA" && (
-                <Button variant="contained" color="secondary" sx={{ mt: 2, width: '50%' }} onClick={() => window.open(projectCards[focusedIndex].link, "_blank")}>View</Button>
-              )}
+              <Box sx={{ height: 5, bgcolor: theme.palette.secondary.main, my: 2, ml: '20px', borderRadius: 1, width: '100px', alignSelf: 'flex-start', mr: 3 }} />
+              <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start'}}>
+                <Typography variant="h5" sx={{mb: 3}}>{projectCards[focusedIndex].description}</Typography>
+                {projectCards[focusedIndex].points.map((point, idx) => (
+                  <Box key={idx} sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                    <Box sx={{ width: 10, height: 10, bgcolor: theme.palette.secondary.main, borderRadius: '10px', mr: 2 }} />
+                    <Typography variant="body1" sx={{ fontWeight: 500 }}>{point}</Typography>
+                  </Box>
+                ))}
+                {projectCards[focusedIndex].link !== "NA" && (
+                  <Button variant="contained" color="secondary" sx={{ mt: 2, width: '50%' }} onClick={() => window.open(projectCards[focusedIndex].link, "_blank")}>View</Button>
+                )}
+              </Box>
             </Box>
           </Box>
         </Box>
@@ -467,16 +491,17 @@ const App: React.FC = () => {
           </GlassSurface>
         </Box>
 
-        {/* <GradualBlur 
+         <GradualBlur 
           target="page"
-          position="bottom"
-          height="10rem"
+          position="top"
+          height="15vh"
           strength={3}
           divCount={10}
           curve="bezier"
           exponential={true}
           opacity={0.7}
-        /> */}
+          zIndex={10}
+        /> 
       </Container>      
     </ThemeProvider>
   );
