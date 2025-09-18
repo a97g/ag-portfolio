@@ -1,3 +1,4 @@
+/* eslint no-use-before-define: 0 */
 import { Renderer, Program, Mesh, Color, Triangle } from "ogl";
 import { useEffect, useRef } from "react";
 

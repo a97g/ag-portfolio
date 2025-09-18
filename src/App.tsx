@@ -34,7 +34,6 @@ import React, { useRef, useEffect, useState } from "react";
 import TextType from "./components/TextType";
 import DarkVeil from "./components/DarkVeil";
 import DotGrid from "./components/DotGrid";
-import GradualBlur from "./components/GradualBlur";
 import LogoLoop from "./components/LogoLoop";
 import Iridescence from "./components/Iridescence";
 import Waves from "./components/Waves";
@@ -171,18 +170,20 @@ const projectCards = [
     points: ["Built with React, TypeScript, Material UI, Framer Motion"],
     link: "NA",
   },
-  {
-    img: null,
-    title: null,
-    description: null,
-    points: [null],
-    link: "NA",
-  },
 ];
 
 const App: React.FC = () => {
   const [focusedIndex, setFocusedIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Contact form state
+  const [contactName, setContactName] = useState<string>("");
+  const [contactEmail, setContactEmail] = useState<string>("");
+  const [contactMessage, setContactMessage] = useState<string>("");
+  const [sending, setSending] = useState<boolean>(false);
+  const [sendSuccess, setSendSuccess] = useState<boolean | null>(null);
+  const [sendError, setSendError] = useState<string | null>(null);
 
   const handleScroll = () => {
     const container = document.getElementById("scrollable-card-box");
@@ -212,6 +213,78 @@ const App: React.FC = () => {
     handleScroll();
     return () => container.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Window resize listener to detect mobile width <800px
+  useEffect(() => {
+    const checkMobile = () =>
+      setIsMobile(window.matchMedia("(max-width:800px)").matches);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // Contact form submit handler — uses Formspree endpoint if provided in env variable
+  const handleContactSubmit: React.FormEventHandler<HTMLFormElement> = async (
+    e
+  ) => {
+    e.preventDefault();
+    setSending(true);
+    setSendError(null);
+    setSendSuccess(null);
+
+    const endpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT || "";
+
+    // Basic validation
+    if (!contactName || !contactEmail || !contactMessage) {
+      setSendError("Please fill in all fields.");
+      setSending(false);
+      return;
+    }
+
+    try {
+      if (endpoint) {
+        // Send to Formspree (expects JSON)
+        const res = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: contactName,
+            email: contactEmail,
+            message: contactMessage,
+          }),
+        });
+
+        if (!res.ok) {
+          const text = await res.text();
+          throw new Error(`Send failed: ${res.status} ${text}`);
+        }
+
+        setSendSuccess(true);
+        setContactName("");
+        setContactEmail("");
+        setContactMessage("");
+      } else {
+        // Fallback to mailto if no endpoint is configured
+        const subject = encodeURIComponent(
+          `Portfolio message from ${contactName}`
+        );
+        const body = encodeURIComponent(
+          `${contactMessage}\n\nFrom: ${contactName} <${contactEmail}>`
+        );
+        window.location.href = `mailto:adamgustin@me.com?subject=${subject}&body=${body}`;
+        setSendSuccess(true);
+      }
+    } catch (err: unknown) {
+      const message =
+        err && typeof err === "object" && "message" in err
+          ? (err as { message?: string }).message
+          : String(err);
+      setSendError(message || "An error occurred while sending message.");
+      setSendSuccess(false);
+    } finally {
+      setSending(false);
+    }
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -428,6 +501,8 @@ const App: React.FC = () => {
                 mt: 4,
                 maxHeight: "90vh",
                 overflowY: "auto",
+                "&::-webkit-scrollbar": { display: "none" },
+                scrollbarColor: "transparent transparent",
               }}
               onWheel={(e) => {
                 const target = e.currentTarget;
@@ -720,7 +795,7 @@ const App: React.FC = () => {
               textAlign: "center",
               mx: "auto",
               fontWeight: 700,
-              mt: 18,
+              mt: isMobile ? 5 : 18,
             }}
           >
             <BlurText
@@ -734,127 +809,234 @@ const App: React.FC = () => {
             sx={{
               display: "flex",
               position: "relative",
+              justifyContent: "center",
               zIndex: 1,
               maxWidth: "1280px",
               mt: 2,
+              width: "100%",
             }}
           >
-            {/* Scrollable Cards */}
-            <Box
-              id="scrollable-card-box"
-              sx={{
-                height: "100vw",
-                overflowY: "auto",
-                width: "50vw",
-                scrollbarWidth: 0,
-                "&::-webkit-scrollbar": { display: "none" },
-                scrollbarColor: "transparent transparent",
-                overflowX: "hidden",
-                display: "flex",
-                flexDirection: "column",
-                scrollSnapType: "y mandatory",
-              }}
-            >
-              {projectCards.map((project, idx) => (
-                <div
-                  key={idx}
-                  data-index={idx}
-                  ref={(el) => {
-                    cardRefs.current[idx] = el;
+            {/* Desktop: Scrollable cards with fixed info. Mobile: stack cards vertically with info inside each card */}
+            {!isMobile ? (
+              <>
+                <Box
+                  id="scrollable-card-box"
+                  sx={{
+                    height: "100vw",
+                    overflowY: "auto",
+                    width: "50vw",
+                    scrollbarWidth: 0,
+                    "&::-webkit-scrollbar": { display: "none" },
+                    scrollbarColor: "transparent transparent",
+                    overflowX: "hidden",
+                    display: "flex",
+                    flexDirection: "column",
+                    scrollSnapType: "y mandatory",
                   }}
-                  style={{ padding: 12, scrollSnapAlign: "start" }}
                 >
-                  {project.img !== null ? (
-                    <SpotlightCard
-                      spotlightColor="rgba(94, 46, 196, 0.2)"
-                      className="project-card"
+                  {projectCards.map((project, idx) => (
+                    <div
+                      key={idx}
+                      data-index={idx}
+                      ref={(el) => {
+                        cardRefs.current[idx] = el;
+                      }}
+                      style={{
+                        padding: 12,
+                        scrollSnapAlign: "start",
+                        marginBottom:
+                          project.title == "Portfolio" ? "100vh" : 0,
+                      }}
                     >
-                      <Typography
-                        variant="h2"
-                        sx={{ mb: 4, fontWeight: 700, textAlign: "center" }}
+                      <SpotlightCard
+                        spotlightColor="rgba(94, 46, 196, 0.79)"
+                        className="project-card"
                       >
-                        {project.title}
-                      </Typography>
-                      <img
-                        src={project.img}
-                        alt={project.title}
-                        className="project-image"
-                      />
-                    </SpotlightCard>
-                  ) : (
-                    <Box sx={{ height: "55vh" }} />
-                  )}
-                </div>
-              ))}
-            </Box>
+                        <Typography
+                          variant="h3"
+                          sx={{ mb: 4, fontWeight: 700, textAlign: "center" }}
+                        >
+                          {project.title}
+                        </Typography>
+                        <img
+                          src={project.img}
+                          alt={project.title}
+                          className="project-image"
+                        />
+                      </SpotlightCard>
+                    </div>
+                  ))}
+                </Box>
 
-            {/* Fixed Information per card */}
-            <Box
-              sx={{
-                position: "sticky",
-                top: 40,
-                alignSelf: "flex-start",
-                display: "flex",
-                maxWidth: "400px",
-                zIndex: 20,
-                mt: 3,
-              }}
-            >
+                {/* Fixed Information per card */}
+                <Box
+                  sx={{
+                    position: "sticky",
+                    top: 40,
+                    alignSelf: "flex-start",
+                    display: "flex",
+                    maxWidth: "400px",
+                    zIndex: 20,
+                    mt: 3,
+                    ml: 4,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      height: 5,
+                      bgcolor: theme.palette.secondary.main,
+                      my: 2,
+                      ml: "20px",
+                      borderRadius: 1,
+                      minWidth: "50px",
+                      alignSelf: "flex-start",
+                      mr: 3,
+                    }}
+                  />
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <Typography variant="h5" sx={{ mb: 3 }}>
+                      {projectCards[focusedIndex].description}
+                    </Typography>
+                    {projectCards[focusedIndex].points.map((point, idx) => (
+                      <Box
+                        key={idx}
+                        sx={{ display: "flex", alignItems: "center", mb: 1 }}
+                      >
+                        <Box
+                          sx={{
+                            width: 10,
+                            height: 10,
+                            bgcolor: theme.palette.secondary.main,
+                            borderRadius: "5px",
+                            mr: 2,
+                          }}
+                        />
+                        <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                          {point}
+                        </Typography>
+                      </Box>
+                    ))}
+                    {projectCards[focusedIndex].link !== "NA" && (
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        sx={{ mt: 2, width: "50%" }}
+                        onClick={() =>
+                          window.open(projectCards[focusedIndex].link, "_blank")
+                        }
+                      >
+                        View
+                      </Button>
+                    )}
+                  </Box>
+                </Box>
+              </>
+            ) : (
               <Box
-                sx={{
-                  height: 5,
-                  bgcolor: theme.palette.secondary.main,
-                  my: 2,
-                  ml: "20px",
-                  borderRadius: 1,
-                  minWidth: "50px",
-                  alignSelf: "flex-start",
-                  mr: 3,
-                }}
-              />
-              <Box
+                id="scrollable-card-box"
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  alignItems: "flex-start",
+                  gap: 3,
+                  width: "100%",
+                  px: 2,
+                  scrollbarWidth: 0,
+                  "&::-webkit-scrollbar": { display: "none" },
+                  scrollbarColor: "transparent transparent",
+                  overflowX: "hidden",
+                  scrollSnapType: "y mandatory",
+                  height: "100vh",
+                  overflowY: "scroll",
+                }}
+                onWheel={(e) => {
+                  const target = e.currentTarget;
+                  const atTop = target.scrollTop === 0;
+                  const atBottom =
+                    target.scrollHeight - target.scrollTop ===
+                    target.clientHeight;
+                  if ((atTop && e.deltaY < 0) || (atBottom && e.deltaY > 0)) {
+                    // Allow page scroll
+                    e.stopPropagation();
+                  } else {
+                    // Prevent page scroll, only scroll the box
+                    e.preventDefault();
+                  }
                 }}
               >
-                <Typography variant="h5" sx={{ mb: 3 }}>
-                  {projectCards[focusedIndex].description}
-                </Typography>
-                {projectCards[focusedIndex].points.map((point, idx) => (
-                  <Box
-                    key={idx}
-                    sx={{ display: "flex", alignItems: "center", mb: 1 }}
-                  >
+                {projectCards.map((project, idx) =>
+                  project.img !== null ? (
                     <Box
                       sx={{
-                        width: 10,
-                        height: 10,
-                        bgcolor: theme.palette.secondary.main,
-                        borderRadius: "10px",
-                        mr: 2,
+                        height: "auto",
+                        mb: project.title == "Portfolio" ? 15 : 0,
                       }}
-                    />
-                    <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                      {point}
-                    </Typography>
-                  </Box>
-                ))}
-                {projectCards[focusedIndex].link !== "NA" && (
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    sx={{ mt: 2, width: "50%" }}
-                    onClick={() =>
-                      window.open(projectCards[focusedIndex].link, "_blank")
-                    }
-                  >
-                    View
-                  </Button>
+                    >
+                      <SpotlightCard
+                        key={idx}
+                        spotlightColor="rgba(94, 46, 196, 1)"
+                        className="project-card"
+                      >
+                        <img
+                          src={project.img}
+                          alt={project.title ?? `project-${idx}`}
+                          className="project-image"
+                        />
+                        <Typography
+                          variant="h4"
+                          sx={{ mt: 1, fontWeight: 800 }}
+                        >
+                          {project.title}
+                        </Typography>
+                        <Typography variant="body1" sx={{ mt: 1 }}>
+                          {project.description}
+                        </Typography>
+                        <Box sx={{ mt: 1 }}>
+                          {project.points.map((p, pidx) =>
+                            p ? (
+                              <Box
+                                key={pidx}
+                                sx={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  mt: 1,
+                                }}
+                              >
+                                <Box
+                                  sx={{
+                                    width: 8,
+                                    height: 8,
+                                    bgcolor: theme.palette.secondary.main,
+                                    borderRadius: "50%",
+                                    mr: 1,
+                                  }}
+                                />
+                                <Typography variant="body2">{p}</Typography>
+                              </Box>
+                            ) : null
+                          )}
+                        </Box>
+                        {project.link && project.link !== "NA" && (
+                          <Button
+                            variant="contained"
+                            color="secondary"
+                            sx={{ mt: 2 }}
+                            onClick={() => window.open(project.link, "_blank")}
+                          >
+                            View
+                          </Button>
+                        )}
+                      </SpotlightCard>
+                    </Box>
+                  ) : null
                 )}
               </Box>
-            </Box>
+            )}
           </Box>
         </Box>
 
@@ -892,7 +1074,7 @@ const App: React.FC = () => {
               speed={0.8}
             />
           </Box>
-          <GlassSurface width={550} height={600} borderRadius={24}>
+          <GlassSurface width={"auto"} height={600} borderRadius={24}>
             <Box
               sx={{
                 position: "relative",
@@ -900,7 +1082,8 @@ const App: React.FC = () => {
                 textAlign: "center",
                 width: "100%",
                 maxWidth: 400,
-                mx: "auto",
+                mr: 5,
+                ml: 5,
               }}
             >
               <Typography variant="h3" gutterBottom>
@@ -911,6 +1094,7 @@ const App: React.FC = () => {
               </Typography>
               <Box
                 component="form"
+                onSubmit={handleContactSubmit}
                 sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}
                 noValidate
                 autoComplete="off"
@@ -921,6 +1105,8 @@ const App: React.FC = () => {
                   variant="outlined"
                   required
                   fullWidth
+                  value={contactName}
+                  onChange={(e) => setContactName(e.target.value)}
                 />
                 <TextField
                   label="Email"
@@ -929,6 +1115,8 @@ const App: React.FC = () => {
                   variant="outlined"
                   required
                   fullWidth
+                  value={contactEmail}
+                  onChange={(e) => setContactEmail(e.target.value)}
                 />
                 <TextField
                   label="Message"
@@ -938,31 +1126,32 @@ const App: React.FC = () => {
                   fullWidth
                   multiline
                   rows={5}
+                  value={contactMessage}
+                  onChange={(e) => setContactMessage(e.target.value)}
                 />
+                {sendError && (
+                  <Typography variant="body2" color="error">
+                    {sendError}
+                  </Typography>
+                )}
+                {sendSuccess && (
+                  <Typography variant="body2" color="success.main">
+                    Message sent — thank you!
+                  </Typography>
+                )}
                 <Button
                   type="submit"
                   variant="contained"
                   color="secondary"
                   sx={{ mt: 2 }}
+                  disabled={sending}
                 >
-                  Send Message
+                  {sending ? "Sending…" : "Send Message"}
                 </Button>
               </Box>
             </Box>
           </GlassSurface>
         </Box>
-
-        <GradualBlur
-          target="page"
-          position="top"
-          height="15vh"
-          strength={3}
-          divCount={10}
-          curve="bezier"
-          exponential={true}
-          opacity={0.7}
-          zIndex={10}
-        />
       </Container>
     </ThemeProvider>
   );
