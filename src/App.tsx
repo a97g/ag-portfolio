@@ -391,7 +391,10 @@ const App: React.FC = () => {
               <Typography variant="h2" sx={{ fontWeight: 900 }}>
                 Hello, I'm Adam Gustin.
               </Typography>
-              <Typography variant="h3" sx={{ fontWeight: 900 }}>
+              <Typography
+                variant={isMobile ? "h5" : "h3"}
+                sx={{ fontWeight: 900 }}
+              >
                 A passionate{" "}
                 <TextType
                   text={[
@@ -410,7 +413,9 @@ const App: React.FC = () => {
                   deletingSpeed={25}
                   showCursor={true}
                   cursorCharacter="|"
-                  textColors={[theme.palette.secondary.main]}
+                  textColors={[
+                    isMobile ? "#fff" : theme.palette.secondary.main,
+                  ]}
                 />
               </Typography>
               <Box sx={{ mt: 2 }}>
@@ -441,7 +446,7 @@ const App: React.FC = () => {
           id="Experience"
           sx={{
             overflow: "hidden",
-            minHeight: "100vh",
+            height: "100vh",
             width: "100vw",
             bgcolor: theme.palette.primary.main,
             color: theme.palette.text.primary,
@@ -488,7 +493,7 @@ const App: React.FC = () => {
               position: "relative",
               zIndex: 1,
               mt: 10,
-              "@media (max-width:800px)": { mt: 2 },
+              "@media (max-width:800px)": { mt: 2, height: "85%" },
             }}
           >
             <Box
@@ -527,7 +532,7 @@ const App: React.FC = () => {
                   textAlign: "left",
                   mx: "auto",
                   fontWeight: 700,
-                  mt: 4,
+                  mt: isMobile ? 2 : 4,
                 }}
               >
                 <BlurText
@@ -546,7 +551,7 @@ const App: React.FC = () => {
                 {/* Dentsu */}
                 <Box
                   sx={{
-                    px: 3,
+                    px: isMobile ? 0 : 3,
                     py: 2,
                     display: "flex",
                     flexDirection: "column",
@@ -566,7 +571,7 @@ const App: React.FC = () => {
                     >
                       General Motors - Dentsu Creative
                     </span>
-                    , Toronto Ontario | 2023 – 2025
+                    , Toronto Ontario {isMobile ? <br /> : "|"} 2023 – 2025
                   </Typography>
                   {[
                     "Developed and maintained a robust Content Management System leveraging Typescript, React, Flutter and Firebase.",
@@ -609,7 +614,7 @@ const App: React.FC = () => {
                 {/* Devlift */}
                 <Box
                   sx={{
-                    px: 3,
+                    px: isMobile ? 0 : 3,
                     py: 2,
                     display: "flex",
                     flexDirection: "column",
@@ -629,7 +634,7 @@ const App: React.FC = () => {
                     >
                       DevLift Media
                     </span>
-                    , London Ontario | 2020 – 2023
+                    , London Ontario {isMobile ? <br /> : "|"} 2020 – 2023
                   </Typography>
                   {[
                     "Developed and maintained scalable web applications using primarily React, TypeScript, CSS, and Firebase.",
@@ -672,7 +677,7 @@ const App: React.FC = () => {
                 {/* Devlift */}
                 <Box
                   sx={{
-                    px: 3,
+                    px: isMobile ? 0 : 3,
                     py: 2,
                     display: "flex",
                     flexDirection: "column",
@@ -845,7 +850,7 @@ const App: React.FC = () => {
                         padding: 12,
                         scrollSnapAlign: "start",
                         marginBottom:
-                          project.title == "Portfolio" ? "100vh" : 0,
+                          project.title == "Portfolio" ? "150vh" : 0,
                       }}
                     >
                       <SpotlightCard
