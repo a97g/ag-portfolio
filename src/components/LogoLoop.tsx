@@ -225,11 +225,7 @@ export const LogoLoop = React.memo<LogoLoopProps>(
       }
     }, []);
 
-    useResizeObserver(
-      updateDimensions,
-      [containerRef, seqRef],
-      [logos, gap, logoHeight]
-    );
+    useResizeObserver(updateDimensions, [containerRef, seqRef]);
 
     useImageLoader(seqRef, updateDimensions, [logos, gap, logoHeight]);
 
