@@ -176,6 +176,7 @@ const App: React.FC = () => {
   const [focusedIndex, setFocusedIndex] = useState(0);
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const experienceInnerRef = useRef<HTMLDivElement | null>(null);
 
   // Contact form state
   const [contactName, setContactName] = useState<string>("");
@@ -222,6 +223,23 @@ const App: React.FC = () => {
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
+
+  // Ensure Experience section and its inner scrollable content start at top on mobile
+  useEffect(() => {
+    if (!isMobile) return;
+    // Scroll page to top (Home) to prevent unexpected snap to other sections
+    const home = document.getElementById("Home");
+    if (home) {
+      home.scrollIntoView({ behavior: "auto" });
+    } else {
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }
+
+    // Reset internal Experience scrollable area
+    if (experienceInnerRef.current) {
+      experienceInnerRef.current.scrollTop = 0;
+    }
+  }, [isMobile]);
 
   // Contact form submit handler — uses Formspree endpoint if provided in env variable
   const handleContactSubmit: React.FormEventHandler<HTMLFormElement> = async (
@@ -509,7 +527,8 @@ const App: React.FC = () => {
                 "&::-webkit-scrollbar": { display: "none" },
                 scrollbarColor: "transparent transparent",
               }}
-              onWheel={(e) => {
+              ref={experienceInnerRef}
+              onWheel={(e: React.WheelEvent<HTMLDivElement>) => {
                 const target = e.currentTarget;
                 const atTop = target.scrollTop === 0;
                 const atBottom =
