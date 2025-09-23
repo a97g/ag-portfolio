@@ -127,7 +127,7 @@ const projectCards = [
       "Built with React, Material UI, Bookeo.",
       "Massaging and manipulating data returned from an external API to display user-centric information.",
     ],
-    link: "https://firstaidconnect.ca/",
+    link: "https://3400rs.pages.dev/",
   },
   {
     img: project4,
@@ -543,24 +543,6 @@ const App: React.FC = () => {
                 }
               }}
             >
-              <Typography
-                variant="h3"
-                gutterBottom
-                sx={{
-                  alignSelf: "flex-start",
-                  textAlign: "left",
-                  mx: "auto",
-                  fontWeight: 700,
-                  mt: isMobile ? 2 : 4,
-                }}
-              >
-                <BlurText
-                  text="Experience"
-                  delay={150}
-                  animateBy="letters"
-                  direction="top"
-                />
-              </Typography>
               <FadeContent
                 blur={true}
                 duration={2000}
