@@ -49,6 +49,7 @@ import project3 from "./assets/projects/project3.png";
 import project4 from "./assets/projects/project4.png";
 import project5 from "./assets/projects/project5.png";
 import project6 from "./assets/projects/project6.png";
+import cv from "./assets/AdamGustinResume.pdf";
 import "./App.css";
 
 // Gfont
@@ -437,7 +438,9 @@ const App: React.FC = () => {
                 />
               </Typography>
               <Box sx={{ mt: 2 }}>
-                <Button variant="outlined">Download CV</Button>
+                <Button variant="outlined" onClick={() => window.open(cv)}>
+                  Download CV
+                </Button>
                 <Button
                   variant="outlined"
                   sx={{
