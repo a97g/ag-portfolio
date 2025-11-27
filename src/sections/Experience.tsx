@@ -25,6 +25,10 @@ import {
   SiBitbucket,
   SiBabel,
   SiFlutter,
+  SiLaravel,
+  SiMysql,
+  SiNextdotjs,
+  SiPhp,
 } from "react-icons/si";
 
 const logos = [
@@ -46,6 +50,10 @@ const logos = [
   { node: <SiBitbucket />, title: "Bitbucket" },
   { node: <FaDocker />, title: "Docker" },
   { node: <SiBabel />, title: "Babel" },
+  { node: <SiLaravel />, title: "Laravel" },
+  { node: <SiMysql />, title: "MySql" },
+  { node: <SiNextdotjs />, title: "Node.js" },
+  { node: <SiPhp />, title: "Php" },
 ];
 
 const experienceCard = [
@@ -130,7 +138,7 @@ const experienceCard = [
         technologies:
           "Java / Laravel (PHP) / MySQL / React (TypeScript) / Material UI / Firebase",
         points: [
-          "Commisioned to create web applications house booking systems, e-commerce platforms, and portfolio sites for various clients.",
+          "Commisioned to create web applications booking systems, e-commerce platforms, and portfolio sites for various clients.",
           "Developed an entire suite of Java plugins for a popular Java based video game, utilizing Java and the clients API to create custom features and enhancements for players.",
           "Created a comprehensive web application for a popular Java based video game, Incorporating features pulling from the game's API to display calculations based on specific users accounts.",
           "Utilized Electron, Websockets, & Java to create overlays for a popular Java based video game fed information through a WebSocket server from the client.",
