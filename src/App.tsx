@@ -4,7 +4,6 @@ import {
   ThemeProvider,
   CssBaseline,
   Container,
-  Box,
 } from "@mui/material";
 import "./App.css";
 

@@ -76,7 +76,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         />
       </Box>
 
-      <CardContent sx={{ p: 0, mt: 2 }}>
+      <CardContent sx={{ p: 0, mt: 2, minHeight: "200px" }}>
         <Typography variant="h5" fontWeight={700} mb={1} color="white">
           {title}
         </Typography>
@@ -94,29 +94,30 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             </li>
           ))}
         </Box>
-
-        <Stack direction="row" spacing={1} flexWrap="wrap" mb={3}>
-          {technologies.map((tech, i) => (
-            <Chip
-              key={i}
-              label={tech}
-              size="small"
-              sx={{
-                bgcolor: "rgba(255,255,255,0.10)",
-                color: "white",
-                borderRadius: "6px",
-                border: "1px solid rgba(255,255,255,0.25)",
-                transition: "all 0.35s ease",
-                "&:hover": {
-                  bgcolor: "rgba(119, 0, 255, 0.25)",
-                  borderColor: "white",
-                  transform: "translateY(-2px)",
-                },
-              }}
-            />
-          ))}
-        </Stack>
       </CardContent>
+
+      <Stack direction="row" spacing={1} flexWrap="wrap" mb={3}>
+        {technologies.map((tech, i) => (
+          <Chip
+            key={i}
+            label={tech}
+            size="small"
+            sx={{
+              bgcolor: "rgba(255,255,255,0.10)",
+              color: "white",
+              borderRadius: "16px",
+              border: "1px solid rgba(255,255,255,0.25)",
+              transition: "all 0.35s ease",
+              marginTop: "10px !important",
+              "&:hover": {
+                bgcolor: "rgba(119, 0, 255, 0.25)",
+                borderColor: "white",
+                transform: "translateY(-2px)",
+              },
+            }}
+          />
+        ))}
+      </Stack>
 
       <Box
         sx={{
