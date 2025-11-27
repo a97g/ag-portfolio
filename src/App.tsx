@@ -7,6 +7,9 @@ import {
   Typography,
   Button,
   TextField,
+  Grid,
+  Tooltip,
+  IconButton,
 } from "@mui/material";
 import {
   FaJava,
@@ -29,28 +32,31 @@ import {
   SiBitbucket,
   SiBabel,
   SiFlutter,
+  SiGmail,
+  SiLinkedin,
+  SiGithub,
 } from "react-icons/si";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextType from "./components/TextType";
 import DarkVeil from "./components/DarkVeil";
 import DotGrid from "./components/DotGrid";
 import LogoLoop from "./components/LogoLoop";
-import Iridescence from "./components/Iridescence";
-import Waves from "./components/Waves";
 import GooeyNav from "./components/GooeyNav";
 import GlassSurface from "./components/GlassSurface";
 import BlurText from "./components/BlurText";
 import FadeContent from "./components/FadeContent";
-import Silk from "./components/Silk";
-import SpotlightCard from "./components/SpotlightCard";
-import project1 from "./assets/projects/project1.png";
-import project2 from "./assets/projects/project2.png";
-import project3 from "./assets/projects/project3.png";
-import project4 from "./assets/projects/project4.png";
-import project5 from "./assets/projects/project5.png";
-import project6 from "./assets/projects/project6.png";
+import ProjectCard from "./components/ProjectCard";
+import gmlive from "./assets/projects/gmlive.png";
+import rspet from "./assets/projects/rspet.png";
+import javaplugins from "./assets/projects/javaplugins.png";
+import firstaidconnect from "./assets/projects/firstaidconnect.png";
+import portfolio from "./assets/projects/portfolio.png";
+import bdcms from "./assets/projects/bdcms.png";
+import geowoot from "./assets/projects/geowoot.png";
+import geometa from "./assets/projects/geometa.png";
 import cv from "./assets/AdamGustinResume.pdf";
 import "./App.css";
+import { BsArrowDownShort } from "react-icons/bs";
 
 // Gfont
 const fontLink = document.createElement("link");
@@ -108,41 +114,111 @@ const logos = [
 
 const projectCards = [
   {
-    img: project1,
+    id: 1,
+    img: gmlive,
     title: "GM LIVE",
     description:
       "GM LIVE was a Content Management System built for General Motors to manage and streamline their digital one-to-one customer video tours and experiences as well as providing a platform for their sales team to manage and organize their customer interactions.",
     points: [
+      "Designed and developed a full Content Management System and virtual showroom connecting EV buyers with live product experts for real-time Q&A and education.",
       "Developed and maintained a robust Content Management System leveraging Typescript, React, Flutter and Firebase.",
       "Implemented scalable and efficient front-end components to enhance user experience and streamline content management workflows.",
       "Utilized Firebase and Google Cloud Platform services to deploy and manage the CMS, ensuring high availability and performance.",
     ],
     link: "NA",
+    github: "NA",
+    technologies: [
+      "TypeScript",
+      "React",
+      "Flutter",
+      "React Native",
+      "Firebase",
+      "GCP",
+      "Symbl AI",
+    ],
   },
   {
-    img: project2,
+    id: 2,
+    img: geowoot,
+    title: "GeoWoot",
+    description:
+      "geowoot is a modern web application that tracks real-time coordinates and displays geographical meta data including maps and country-specific information. It features a responsive UI with live updates, reverse geocoding, and integrated Google Maps visualization.",
+    points: [
+      "Real-time Coordinate Tracking: Monitor and display live geographic coordinates.",
+      "Reverse Geocoding: Automatically convert coordinates to city and country names using OpenStreetMap's Nominatim.",
+      "Interactive Maps: Embedded Google Maps with adjustable zoom levels (1-20).",
+      "Country Metadata: Display country-specific information fetched from geometas.com",
+      "Live Updates: Automatic refresh with SWR for real-time data synchronization.",
+      "Responsive Design: Mobile-friendly interface with Tailwind CSS and shadcn/ui components.",
+    ],
+    link: "NA",
+    github: "https://github.com/a97g/geowoot",
+    technologies: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind",
+      "PostCSS",
+      "shadcn",
+      "SWR",
+    ],
+  },
+  {
+    id: 2,
+    img: geometa,
+    title: "Geometa Trainer",
+    description:
+      "A web application for learning geographical location identification through street view metas. The aim of this project is to help users learn and quickly identify where they are in the world through easy to distinguish objects.",
+    points: [
+      "Browse metas by 8 geographical regions and 18 categories.",
+      "User authentication with registration and login.",
+      "Submit new metas with images and country selection.",
+      "Track your submissions with approval status.",
+      "Admin approval panel for reviewing and managing submissions.",
+    ],
+    link: "NA",
+    github: "https://github.com/a97g/geometa-trainer",
+    technologies: [
+      "Laravel 8",
+      "Vue",
+      "MySQL",
+      "Laravel Breeze",
+      "Vite",
+      "Axios",
+      "Sanctum",
+    ],
+  },
+  {
+    id: 3,
+    img: rspet,
     title: "3400rs",
     description:
       "Popular page among the OldSchool Runescape Community used to display and track a users accomplishments as well as leaderboards.",
     points: [
-      "Built with React, Material UI, Bookeo.",
+      "Browse and view users leaderboard statistics.",
+      "Modern and highly customizable UI.",
       "Massaging and manipulating data returned from an external API to display user-centric information.",
     ],
     link: "https://3400rs.pages.dev/",
+    github: "https://github.com/a97g/3400rs",
+    technologies: ["React", "Material UI", "APIs"],
   },
   {
-    img: project4,
+    id: 5,
+    img: firstaidconnect,
     title: "First Aid Connect",
     description:
       "First Aid Connect offers certified first aid training in Ottawa, with flexible courses for individuals and workplaces. I created the website and implemented a booking system for users to easily enroll in courses.",
     points: [
-      "Built with React, Material UI, Bookeo",
-      "I created the website and implemented a booking system for users to easily enroll in courses.",
+      "Browse and select from large list of available courses.",
+      "Implemented booking system for users to easily enroll in courses.",
     ],
     link: "https://firstaidconnect.ca/",
+    github: "NA",
+    technologies: ["React", "Material UI", "Bookeo", "Shopify"],
   },
   {
-    img: project3,
+    id: 6,
+    img: javaplugins,
     title: "Java Plugins",
     description:
       "Large suite of proprietary Java based plugins for OldSchool Runescape third-party client RuneLite.",
@@ -151,10 +227,13 @@ const projectCards = [
       "Aimed to create custom features & enhancements to improve user experience and provide additional functionalities.",
     ],
     link: "NA",
+    github: "NA",
+    technologies: ["Java", "Gradle", "APIs"],
   },
   {
-    img: project6,
-    title: "BigDog CMS",
+    id: 7,
+    img: bdcms,
+    title: "Flexible CMS",
     description:
       "Discord.JS integrated bot & web dashboard for managing a Discord community. Allowing users to submit their own ranking information and have it displayed neatly on a web dashboard.",
     points: [
@@ -162,22 +241,30 @@ const projectCards = [
       "Features Role Management, Custom Commands, Submission Approval.",
     ],
     link: "NA",
+    github: "NA",
+    technologies: [
+      "TypeScript",
+      "React",
+      "Material UI",
+      "Firebase",
+      "Discord.Js",
+    ],
   },
   {
-    img: project5,
+    id: 8,
+    img: portfolio,
     title: "Portfolio",
     description:
       "Personal portfolio website showcasing my projects, skills, and experience. Built with React and Material-UI.",
     points: ["Built with React, TypeScript, Material UI, Framer Motion"],
     link: "NA",
+    github: "NA",
+    technologies: ["TypeScript", "React", "Material UI", "Framer Motion"],
   },
 ];
 
 const App: React.FC = () => {
-  const [focusedIndex, setFocusedIndex] = useState(0);
   const [isMobile, setIsMobile] = useState<boolean>(false);
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const experienceInnerRef = useRef<HTMLDivElement | null>(null);
 
   // Contact form state
   const [contactName, setContactName] = useState<string>("");
@@ -186,35 +273,6 @@ const App: React.FC = () => {
   const [sending, setSending] = useState<boolean>(false);
   const [sendSuccess, setSendSuccess] = useState<boolean | null>(null);
   const [sendError, setSendError] = useState<string | null>(null);
-
-  const handleScroll = () => {
-    const container = document.getElementById("scrollable-card-box");
-    if (!container) return;
-    let minDistance = Infinity;
-    let topIndex = 0;
-    cardRefs.current.forEach((ref, idx) => {
-      if (ref) {
-        const rect = ref.getBoundingClientRect();
-        const containerRect = container.getBoundingClientRect();
-        const distance = Math.abs(rect.top - containerRect.top);
-        if (distance < minDistance) {
-          minDistance = distance;
-          topIndex = idx;
-        }
-      }
-    });
-    setFocusedIndex(topIndex);
-  };
-
-  // Attach scroll event
-  useEffect(() => {
-    const container = document.getElementById("scrollable-card-box");
-    if (!container) return;
-    container.addEventListener("scroll", handleScroll);
-    // Initial check
-    handleScroll();
-    return () => container.removeEventListener("scroll", handleScroll);
-  }, []);
 
   // Window resize listener to detect mobile width <800px
   useEffect(() => {
@@ -225,24 +283,7 @@ const App: React.FC = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Ensure Experience section and its inner scrollable content start at top on mobile
-  useEffect(() => {
-    if (!isMobile) return;
-    // Scroll page to top (Home) to prevent unexpected snap to other sections
-    const home = document.getElementById("Home");
-    if (home) {
-      home.scrollIntoView({ behavior: "auto" });
-    } else {
-      window.scrollTo({ top: 0, behavior: "auto" });
-    }
-
-    // Reset internal Experience scrollable area
-    if (experienceInnerRef.current) {
-      experienceInnerRef.current.scrollTop = 0;
-    }
-  }, [isMobile]);
-
-  // Contact form submit handler — uses Formspree endpoint if provided in env variable
+  // Contact form submit handler
   const handleContactSubmit: React.FormEventHandler<HTMLFormElement> = async (
     e
   ) => {
@@ -262,7 +303,7 @@ const App: React.FC = () => {
 
     try {
       if (endpoint) {
-        // Send to Formspree (expects JSON)
+        // Send to Formspree
         const res = await fetch(endpoint, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -283,7 +324,7 @@ const App: React.FC = () => {
         setContactEmail("");
         setContactMessage("");
       } else {
-        // Fallback to mailto if no endpoint is configured
+        // Fallback to mailto
         const subject = encodeURIComponent(
           `Portfolio message from ${contactName}`
         );
@@ -308,6 +349,42 @@ const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      {/* Background */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          zIndex: 0,
+        }}
+      >
+        <DarkVeil />
+      </Box>
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          zIndex: 0,
+        }}
+      >
+        <DotGrid
+          dotSize={2}
+          gap={15}
+          baseColor="#101010"
+          activeColor="white"
+          proximity={120}
+          shockRadius={250}
+          shockStrength={5}
+          resistance={750}
+          returnDuration={1.5}
+          style={{ backgroundColor: "transparent" }}
+        />
+      </Box>
       <Box
         sx={{
           position: "fixed",
@@ -342,7 +419,6 @@ const App: React.FC = () => {
           m: 0,
           height: "100vh",
           overflowY: "auto",
-          scrollSnapType: "y mandatory",
         }}
       >
         {/* Welcome Section */}
@@ -360,45 +436,9 @@ const App: React.FC = () => {
             alignItems: "center",
             justifyContent: "center",
             boxSizing: "border-box",
-            scrollSnapAlign: "start",
+            scrollSnapType: "y-proximity",
           }}
         >
-          {/* Background */}
-          <Box
-            sx={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100vw",
-              height: "100vh",
-              zIndex: 0,
-            }}
-          >
-            <DarkVeil />
-          </Box>
-          <Box
-            sx={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100vw",
-              height: "100vh",
-              zIndex: 0,
-            }}
-          >
-            <DotGrid
-              dotSize={2}
-              gap={15}
-              baseColor="#101010"
-              activeColor="white"
-              proximity={120}
-              shockRadius={250}
-              shockStrength={5}
-              resistance={750}
-              returnDuration={1.5}
-              style={{ backgroundColor: "transparent" }}
-            />
-          </Box>
           {/* Content */}
           <Box sx={{ position: "relative", zIndex: 1, textAlign: "center" }}>
             <FadeContent
@@ -407,6 +447,25 @@ const App: React.FC = () => {
               easing="ease-out"
               initialOpacity={0}
             >
+              {/* Bouncing arrow */}
+              <Box
+                sx={{
+                  position: "absolute",
+                  bottom: -350,
+                  left: "48%",
+                  transform: "translateX(-50%)",
+                  animation: "bounce 2s infinite",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  const nextSection = document.getElementById("Experience");
+                  if (nextSection) {
+                    nextSection.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
+              >
+                <BsArrowDownShort size={40} />
+              </Box>
               <Typography variant="h2" sx={{ fontWeight: 900 }}>
                 Hello, I'm Adam Gustin.
               </Typography>
@@ -466,8 +525,6 @@ const App: React.FC = () => {
         <Box
           id="Experience"
           sx={{
-            overflow: "hidden",
-            height: "100vh",
             width: "100vw",
             bgcolor: theme.palette.primary.main,
             color: theme.palette.text.primary,
@@ -477,34 +534,8 @@ const App: React.FC = () => {
             alignItems: "center",
             justifyContent: "center",
             boxSizing: "border-box",
-            scrollSnapAlign: "start",
           }}
         >
-          {/* Background */}
-          <Box
-            sx={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              zIndex: 0,
-            }}
-          >
-            <Waves
-              lineColor="#0f0f0fff"
-              backgroundColor="black"
-              waveSpeedX={0.02}
-              waveSpeedY={0.01}
-              waveAmpX={40}
-              waveAmpY={20}
-              friction={0.9}
-              tension={0.01}
-              maxCursorMove={120}
-              xGap={12}
-              yGap={36}
-            />
-          </Box>
           <Box
             sx={{
               width: "100%",
@@ -513,7 +544,6 @@ const App: React.FC = () => {
               alignItems: "center",
               position: "relative",
               zIndex: 1,
-              mt: 10,
               "@media (max-width:800px)": { mt: 2, height: "85%" },
             }}
           >
@@ -524,65 +554,101 @@ const App: React.FC = () => {
                 alignItems: "center",
                 justifyContent: "center",
                 width: "80%",
-                mt: 4,
-                maxHeight: "90vh",
-                overflowY: "auto",
                 "&::-webkit-scrollbar": { display: "none" },
                 scrollbarColor: "transparent transparent",
               }}
-              ref={experienceInnerRef}
-              onWheel={(e: React.WheelEvent<HTMLDivElement>) => {
-                const target = e.currentTarget;
-                const atTop = target.scrollTop === 0;
-                const atBottom =
-                  target.scrollHeight - target.scrollTop ===
-                  target.clientHeight;
-                if ((atTop && e.deltaY < 0) || (atBottom && e.deltaY > 0)) {
-                  // Allow page scroll
-                  e.stopPropagation();
-                } else {
-                  // Prevent page scroll, only scroll the box
-                  e.preventDefault();
-                }
-              }}
             >
-              <FadeContent
-                blur={true}
-                duration={2000}
-                easing="ease-out"
-                initialOpacity={0}
+              <Typography
+                variant="h3"
+                gutterBottom
+                sx={{
+                  alignSelf: "flex-start",
+                  textAlign: "center",
+                  mx: "auto",
+                  fontWeight: 700,
+                  mt: isMobile ? 5 : 18,
+                }}
               >
-                {/* Dentsu */}
-                <Box
-                  sx={{
-                    px: isMobile ? 0 : 3,
-                    py: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    width: "100%",
-                  }}
+                <BlurText
+                  text="Experience"
+                  delay={150}
+                  animateBy="letters"
+                  direction="top"
+                />
+              </Typography>
+              {/* Dentsu */}
+              <Box
+                sx={{
+                  px: isMobile ? 0 : 3,
+                  py: 2,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  width: "100%",
+
+                  backdropFilter: "blur(14px)",
+                  WebkitBackdropFilter: "blur(14px)",
+                  background: "rgba(0, 0, 0, 0.45)",
+                  border: "1px solid rgba(255, 255, 255, 0.08)",
+                  borderRadius: "22px",
+                  boxShadow: "0 8px 30px rgba(0, 0, 0, 0.45)",
+                  padding: 3,
+                }}
+              >
+                <FadeContent
+                  blur={true}
+                  duration={1000}
+                  easing="ease-out"
+                  initialOpacity={0}
                 >
-                  <Typography variant="h5" sx={{ fontWeight: 900 }}>
-                    Full-Stack Developer
+                  <Typography variant="h5" sx={{ fontWeight: 300, mb: 1 }}>
+                    <span
+                      style={{
+                        color: theme.palette.primary.main,
+                        fontWeight: 800,
+                      }}
+                    >
+                      Full-Stack Developer
+                    </span>
+                    {isMobile ? <br /> : " - "}
+                    <span
+                      style={{
+                        color: theme.palette.secondary.main,
+                        fontWeight: 600,
+                      }}
+                    >
+                      Dentsu Creative
+                    </span>
+                    , Toronto Ontario {isMobile ? <br /> : "-"} 2023 - 2025
                   </Typography>
                   <Typography variant="h6" sx={{ fontWeight: 300, mb: 2 }}>
                     <span
                       style={{
-                        color: theme.palette.secondary.main,
-                        fontWeight: 500,
+                        color: theme.palette.primary.main,
+                        fontWeight: 600,
+                        textDecoration: "underline",
                       }}
                     >
-                      General Motors - Dentsu Creative
+                      General Motors Live
                     </span>
-                    , Toronto Ontario {isMobile ? <br /> : "|"} 2023 – 2025
+                    {" - "}
+                    <span
+                      style={{
+                        fontStyle: "italic",
+                        fontSize: "1rem",
+                      }}
+                    >
+                      React (TypeScript) / Material UI / Node.js (Express) /
+                      Firebase Functions / React Native / Symbl AI
+                    </span>
                   </Typography>
                   {[
-                    "Developed and maintained a robust Content Management System leveraging Typescript, React, Flutter and Firebase.",
-                    "Implemented scalable and efficient front-end components to enhance user experience and streamline content management workflows.",
-                    "Utilized Firebase and Google Cloud Platform services to deploy and manage the CMS, ensuring high availability and performance.",
-                    "Collaborated with cross-functional teams, including product managers and designers, to gather requirements and deliver tailored solutions.",
-                    "Employed JIRA for agile project management, tracking progress, and ensuring timely delivery of project milestones.",
+                    "Designed and developed a full Content Management System and virtual showroom connecting EV buyers with live product experts for real-time Q&A and education.",
+                    "Built scalable full-stack architecture using Node.js, Firebase Functions, and TypeScript for seamless communication and data handling.",
+                    "Developed responsive front-end components with React, Material UI, and React Native, ensuring consistent cross-platform UX.",
+                    "Leveraged Firebase and Google Cloud Platform for secure hosting, authentication, and deployment with high availability.",
+                    "Integrated Symbl AI for conversational intelligence, providing transcriptions and real-time interaction insights.",
+                    "Collaborated with design and product teams to refine workflows, managed tasks in JIRA, and delivered on agile milestones.",
                   ].map((point, idx) => (
                     <Box
                       key={idx}
@@ -602,50 +668,88 @@ const App: React.FC = () => {
                       </Typography>
                     </Box>
                   ))}
-                </Box>
-                {/* Divider */}
-                <Box
-                  sx={{
-                    height: 5,
-                    bgcolor: theme.palette.secondary.main,
-                    my: 2,
-                    ml: "20px",
-                    borderRadius: 1,
-                    width: "250px",
-                    alignSelf: "flex-start",
-                  }}
-                />
-                {/* Devlift */}
-                <Box
-                  sx={{
-                    px: isMobile ? 0 : 3,
-                    py: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    width: "100%",
-                  }}
+                </FadeContent>
+              </Box>
+              {/* Divider */}
+              <Box
+                sx={{
+                  height: 5,
+                  bgcolor: theme.palette.secondary.main,
+                  my: 2,
+                  ml: "20px",
+                  borderRadius: 1,
+                  width: "250px",
+                  alignSelf: "flex-start",
+                }}
+              />
+              {/* Devlift */}
+              <Box
+                sx={{
+                  px: isMobile ? 0 : 3,
+                  py: 2,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  width: "100%",
+
+                  backdropFilter: "blur(14px)",
+                  WebkitBackdropFilter: "blur(14px)",
+                  background: "rgba(0, 0, 0, 0.45)",
+                  border: "1px solid rgba(255, 255, 255, 0.08)",
+                  borderRadius: "22px",
+                  boxShadow: "0 8px 30px rgba(0, 0, 0, 0.45)",
+                  padding: 3,
+                }}
+              >
+                <FadeContent
+                  blur={true}
+                  duration={1500}
+                  easing="ease-out"
+                  initialOpacity={0}
                 >
-                  <Typography variant="h5" sx={{ fontWeight: 900 }}>
-                    Full-Stack Developer
-                  </Typography>
-                  <Typography variant="h6" sx={{ fontWeight: 300, mb: 2 }}>
+                  <Typography variant="h5" sx={{ fontWeight: 300, mb: 1 }}>
+                    <span
+                      style={{
+                        color: theme.palette.primary.main,
+                        fontWeight: 800,
+                      }}
+                    >
+                      Full-Stack Developer
+                    </span>
+                    {isMobile ? <br /> : " - "}
                     <span
                       style={{
                         color: theme.palette.secondary.main,
-                        fontWeight: 500,
+                        fontWeight: 600,
                       }}
                     >
                       DevLift Media
                     </span>
-                    , London Ontario {isMobile ? <br /> : "|"} 2020 – 2023
+                    , London Ontario {isMobile ? <br /> : "-"} 2020 - 2023
+                  </Typography>
+                  <Typography variant="h6" sx={{ fontWeight: 300, mb: 2 }}>
+                    <span
+                      style={{
+                        color: theme.palette.primary.main,
+                        fontWeight: 600,
+                        textDecoration: "underline",
+                      }}
+                    >
+                      Glissner
+                    </span>
+                    {" - "}
+                    <span
+                      style={{
+                        fontStyle: "italic",
+                        fontSize: "1rem",
+                      }}
+                    >
+                      React (TypeScript) / Material UI / Framer Motion
+                    </span>
                   </Typography>
                   {[
-                    "Developed and maintained scalable web applications using primarily React, TypeScript, CSS, and Firebase.",
-                    "Implemented responsive UI components and features, ensuring a seamless user experience across devices.",
-                    "Worked closely with UX/UI designers to implement pixel-perfect designs and ensure optimal user experience.",
-                    "Fostered strong client relationships by collaborating to bring their application visions to life",
-                    "Leveraged various agile development methodologies and project management such as JIRA and Trello to concisely and efficiently conduct tasks.",
+                    "Built a responsive, animated front-ends with React and Motion.dev for a polished, high-performance site.",
+                    "Improved UX through optimized rendering and dynamic interactions.",
                   ].map((point, idx) => (
                     <Box
                       key={idx}
@@ -665,38 +769,185 @@ const App: React.FC = () => {
                       </Typography>
                     </Box>
                   ))}
-                </Box>
-                {/* Divider */}
-                <Box
-                  sx={{
-                    height: 5,
-                    bgcolor: theme.palette.secondary.main,
-                    my: 2,
-                    ml: "20px",
-                    borderRadius: 1,
-                    width: "250px",
-                    alignSelf: "flex-start",
-                  }}
-                />
-                {/* Devlift */}
-                <Box
-                  sx={{
-                    px: isMobile ? 0 : 3,
-                    py: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    width: "100%",
-                  }}
-                >
-                  <Typography variant="h5" sx={{ fontWeight: 900 }}>
-                    Full-Stack Developer
-                  </Typography>
                   <Typography variant="h6" sx={{ fontWeight: 300, mb: 2 }}>
                     <span
                       style={{
+                        color: theme.palette.primary.main,
+                        fontWeight: 600,
+                        textDecoration: "underline",
+                      }}
+                    >
+                      Alexandria
+                    </span>
+                    {" - "}
+                    <span
+                      style={{
+                        fontStyle: "italic",
+                        fontSize: "1rem",
+                      }}
+                    >
+                      jQuery / API Integration
+                    </span>
+                  </Typography>
+                  {[
+                    "Developed a scalable jQuery API layer for searchable pharmacist content.",
+                    "Enhanced data delivery speed and accuracy with optimized query logic.",
+                  ].map((point, idx) => (
+                    <Box
+                      key={idx}
+                      sx={{ display: "flex", alignItems: "center", mb: 1 }}
+                    >
+                      <Box
+                        sx={{
+                          width: 10,
+                          height: 10,
+                          bgcolor: theme.palette.secondary.main,
+                          borderRadius: "50%",
+                          mr: 2,
+                        }}
+                      />
+                      <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                        {point}
+                      </Typography>
+                    </Box>
+                  ))}
+                  <Typography variant="h6" sx={{ fontWeight: 300, mb: 2 }}>
+                    <span
+                      style={{
+                        color: theme.palette.primary.main,
+                        fontWeight: 600,
+                        textDecoration: "underline",
+                      }}
+                    >
+                      Baseline
+                    </span>
+                    {" - "}
+                    <span
+                      style={{
+                        fontStyle: "italic",
+                        fontSize: "1rem",
+                      }}
+                    >
+                      React (TypeScript) / Redux / Tailwind / Firebase
+                    </span>
+                  </Typography>
+                  {[
+                    "Built a full-stack financial app with secure auth and real-time data sync.",
+                    "Designed robust state management and reporting interface.",
+                  ].map((point, idx) => (
+                    <Box
+                      key={idx}
+                      sx={{ display: "flex", alignItems: "center", mb: 1 }}
+                    >
+                      <Box
+                        sx={{
+                          width: 10,
+                          height: 10,
+                          bgcolor: theme.palette.secondary.main,
+                          borderRadius: "50%",
+                          mr: 2,
+                        }}
+                      />
+                      <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                        {point}
+                      </Typography>
+                    </Box>
+                  ))}
+                  <Typography variant="h6" sx={{ fontWeight: 300, mb: 2 }}>
+                    <span
+                      style={{
+                        color: theme.palette.primary.main,
+                        fontWeight: 600,
+                        textDecoration: "underline",
+                      }}
+                    >
+                      LockDocs
+                    </span>
+                    {" - "}
+                    <span
+                      style={{
+                        fontStyle: "italic",
+                        fontSize: "1rem",
+                      }}
+                    >
+                      React (TypeScript) / Material UI / Firebase
+                    </span>
+                  </Typography>
+                  {[
+                    "Created end-to-end PDF signing workflow with secure file handling.",
+                    "Managed full client lifecycle from requirements to deployment.",
+                  ].map((point, idx) => (
+                    <Box
+                      key={idx}
+                      sx={{ display: "flex", alignItems: "center", mb: 1 }}
+                    >
+                      <Box
+                        sx={{
+                          width: 10,
+                          height: 10,
+                          bgcolor: theme.palette.secondary.main,
+                          borderRadius: "50%",
+                          mr: 2,
+                        }}
+                      />
+                      <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                        {point}
+                      </Typography>
+                    </Box>
+                  ))}
+                </FadeContent>
+              </Box>
+              {/* Divider */}
+              <Box
+                sx={{
+                  height: 5,
+                  bgcolor: theme.palette.secondary.main,
+                  my: 2,
+                  ml: "20px",
+                  borderRadius: 1,
+                  width: "250px",
+                  alignSelf: "flex-start",
+                }}
+              />
+              {/* Personal */}
+              <Box
+                sx={{
+                  px: isMobile ? 0 : 3,
+                  py: 2,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  width: "100%",
+
+                  backdropFilter: "blur(14px)",
+                  WebkitBackdropFilter: "blur(14px)",
+                  background: "rgba(0, 0, 0, 0.45)",
+                  border: "1px solid rgba(255, 255, 255, 0.08)",
+                  borderRadius: "22px",
+                  boxShadow: "0 8px 30px rgba(0, 0, 0, 0.45)",
+                  padding: 3,
+                }}
+              >
+                <FadeContent
+                  blur={true}
+                  duration={2000}
+                  easing="ease-out"
+                  initialOpacity={0}
+                >
+                  <Typography variant="h5" sx={{ fontWeight: 300, mb: 1 }}>
+                    <span
+                      style={{
+                        color: theme.palette.primary.main,
+                        fontWeight: 800,
+                      }}
+                    >
+                      Full-Stack Developer
+                    </span>
+                    {isMobile ? <br /> : " - "}
+                    <span
+                      style={{
                         color: theme.palette.secondary.main,
-                        fontWeight: 500,
+                        fontWeight: 600,
                       }}
                     >
                       Personal & Commissioned Projects
@@ -704,9 +955,9 @@ const App: React.FC = () => {
                   </Typography>
                   {[
                     "Commisioned to create web applications house booking systems, e-commerce platforms, and portfolio sites for various clients.",
-                    "Developed an entire suite of Java plugins for OldSchool RuneScape, utilizing Java and the clients API to create custom features and enhancements for players.",
-                    "Created a comprehensive web application for OldSchool RuneScape, Incorporating features pulling from the game's API to display calculations based on specific users accounts.",
-                    "Utilized Electron, Websockets, & Java to create overlays for OldSchool RuneScape fed information through a WebSocket server from the client.",
+                    "Developed an entire suite of Java plugins for a popular Java based video game, utilizing Java and the clients API to create custom features and enhancements for players.",
+                    "Created a comprehensive web application for a popular Java based video game, Incorporating features pulling from the game's API to display calculations based on specific users accounts.",
+                    "Utilized Electron, Websockets, & Java to create overlays for a popular Java based video game fed information through a WebSocket server from the client.",
                   ].map((point, idx) => (
                     <Box
                       key={idx}
@@ -726,8 +977,8 @@ const App: React.FC = () => {
                       </Typography>
                     </Box>
                   ))}
-                </Box>
-              </FadeContent>
+                </FadeContent>
+              </Box>
             </Box>
           </Box>
           <Box
@@ -741,7 +992,7 @@ const App: React.FC = () => {
           >
             <FadeContent
               blur={true}
-              duration={3000}
+              duration={500}
               easing="ease-in"
               initialOpacity={0}
             >
@@ -763,8 +1014,6 @@ const App: React.FC = () => {
         <Box
           id="Projects"
           sx={{
-            overflow: "hidden",
-            height: "100vh",
             width: "100vw",
             position: "relative",
             bgcolor: theme.palette.primary.main,
@@ -773,29 +1022,8 @@ const App: React.FC = () => {
             flexDirection: "column",
             alignItems: "center",
             boxSizing: "border-box",
-            scrollSnapAlign: "start",
           }}
         >
-          {/* Background */}
-          <Box
-            sx={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              zIndex: 0,
-            }}
-          >
-            <Silk
-              speed={5}
-              scale={1}
-              color="#5c0a9aff"
-              noiseIntensity={1.5}
-              rotation={0}
-            />
-          </Box>
-
           <Typography
             variant="h3"
             gutterBottom
@@ -808,245 +1036,29 @@ const App: React.FC = () => {
             }}
           >
             <BlurText
-              text="Projects"
+              text="Featured Projects"
               delay={150}
               animateBy="letters"
               direction="top"
             />
           </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              position: "relative",
-              justifyContent: "center",
-              zIndex: 1,
-              maxWidth: "1280px",
-              mt: 2,
-              width: "100%",
-            }}
+          {/* Projects Grid */}
+          <Grid
+            container
+            spacing={4}
+            justifyContent="center"
+            alignItems="stretch"
+            sx={{ py: 6, width: "90%" }}
           >
-            {/* Desktop: Scrollable cards with fixed info. Mobile: stack cards vertically with info inside each card */}
-            {!isMobile ? (
-              <>
-                <Box
-                  id="scrollable-card-box"
-                  sx={{
-                    height: "100vw",
-                    overflowY: "auto",
-                    width: "50vw",
-                    scrollbarWidth: 0,
-                    "&::-webkit-scrollbar": { display: "none" },
-                    scrollbarColor: "transparent transparent",
-                    overflowX: "hidden",
-                    display: "flex",
-                    flexDirection: "column",
-                    scrollSnapType: "y mandatory",
-                  }}
-                >
-                  {projectCards.map((project, idx) => (
-                    <div
-                      key={idx}
-                      data-index={idx}
-                      ref={(el) => {
-                        cardRefs.current[idx] = el;
-                      }}
-                      style={{
-                        padding: 12,
-                        scrollSnapAlign: "start",
-                        marginBottom:
-                          project.title == "Portfolio" ? "150vh" : 0,
-                      }}
-                    >
-                      <SpotlightCard
-                        spotlightColor="rgba(94, 46, 196, 0.79)"
-                        className="project-card"
-                      >
-                        <Typography
-                          variant="h3"
-                          sx={{ mb: 4, fontWeight: 700, textAlign: "center" }}
-                        >
-                          {project.title}
-                        </Typography>
-                        <img
-                          src={project.img}
-                          alt={project.title}
-                          className="project-image"
-                        />
-                      </SpotlightCard>
-                    </div>
-                  ))}
-                </Box>
-
-                {/* Fixed Information per card */}
-                <Box
-                  sx={{
-                    position: "sticky",
-                    top: 40,
-                    alignSelf: "flex-start",
-                    display: "flex",
-                    maxWidth: "400px",
-                    zIndex: 20,
-                    mt: 3,
-                    ml: 4,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      height: 5,
-                      bgcolor: theme.palette.secondary.main,
-                      my: 2,
-                      ml: "20px",
-                      borderRadius: 1,
-                      minWidth: "50px",
-                      alignSelf: "flex-start",
-                      mr: 3,
-                    }}
-                  />
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-start",
-                    }}
-                  >
-                    <Typography variant="h5" sx={{ mb: 3 }}>
-                      {projectCards[focusedIndex].description}
-                    </Typography>
-                    {projectCards[focusedIndex].points.map((point, idx) => (
-                      <Box
-                        key={idx}
-                        sx={{ display: "flex", alignItems: "center", mb: 1 }}
-                      >
-                        <Box
-                          sx={{
-                            width: 10,
-                            height: 10,
-                            bgcolor: theme.palette.secondary.main,
-                            borderRadius: "5px",
-                            mr: 2,
-                          }}
-                        />
-                        <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                          {point}
-                        </Typography>
-                      </Box>
-                    ))}
-                    {projectCards[focusedIndex].link !== "NA" && (
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        sx={{ mt: 2, width: "50%" }}
-                        onClick={() =>
-                          window.open(projectCards[focusedIndex].link, "_blank")
-                        }
-                      >
-                        View
-                      </Button>
-                    )}
-                  </Box>
-                </Box>
-              </>
-            ) : (
-              <Box
-                id="scrollable-card-box"
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 3,
-                  width: "100%",
-                  px: 2,
-                  scrollbarWidth: 0,
-                  "&::-webkit-scrollbar": { display: "none" },
-                  scrollbarColor: "transparent transparent",
-                  overflowX: "hidden",
-                  scrollSnapType: "y mandatory",
-                  height: "100vh",
-                  overflowY: "scroll",
-                }}
-                onWheel={(e) => {
-                  const target = e.currentTarget;
-                  const atTop = target.scrollTop === 0;
-                  const atBottom =
-                    target.scrollHeight - target.scrollTop ===
-                    target.clientHeight;
-                  if ((atTop && e.deltaY < 0) || (atBottom && e.deltaY > 0)) {
-                    // Allow page scroll
-                    e.stopPropagation();
-                  } else {
-                    // Prevent page scroll, only scroll the box
-                    e.preventDefault();
-                  }
-                }}
+            {projectCards.map((proj) => (
+              <Grid
+                key={proj.id}
+                sx={{ display: "flex", justifyContent: "center" }}
               >
-                {projectCards.map((project, idx) =>
-                  project.img !== null ? (
-                    <Box
-                      sx={{
-                        height: "auto",
-                        mb: project.title == "Portfolio" ? 15 : 0,
-                      }}
-                    >
-                      <SpotlightCard
-                        key={idx}
-                        spotlightColor="rgba(94, 46, 196, 1)"
-                        className="project-card"
-                      >
-                        <img
-                          src={project.img}
-                          alt={project.title ?? `project-${idx}`}
-                          className="project-image"
-                        />
-                        <Typography
-                          variant="h4"
-                          sx={{ mt: 1, fontWeight: 800 }}
-                        >
-                          {project.title}
-                        </Typography>
-                        <Typography variant="body1" sx={{ mt: 1 }}>
-                          {project.description}
-                        </Typography>
-                        <Box sx={{ mt: 1 }}>
-                          {project.points.map((p, pidx) =>
-                            p ? (
-                              <Box
-                                key={pidx}
-                                sx={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  mt: 1,
-                                }}
-                              >
-                                <Box
-                                  sx={{
-                                    width: 8,
-                                    height: 8,
-                                    bgcolor: theme.palette.secondary.main,
-                                    borderRadius: "50%",
-                                    mr: 1,
-                                  }}
-                                />
-                                <Typography variant="body2">{p}</Typography>
-                              </Box>
-                            ) : null
-                          )}
-                        </Box>
-                        {project.link && project.link !== "NA" && (
-                          <Button
-                            variant="contained"
-                            color="secondary"
-                            sx={{ mt: 2 }}
-                            onClick={() => window.open(project.link, "_blank")}
-                          >
-                            View
-                          </Button>
-                        )}
-                      </SpotlightCard>
-                    </Box>
-                  ) : null
-                )}
-              </Box>
-            )}
-          </Box>
+                <ProjectCard {...proj} />
+              </Grid>
+            ))}
+          </Grid>
         </Box>
 
         {/* Contact Section */}
@@ -1063,27 +1075,27 @@ const App: React.FC = () => {
             alignItems: "center",
             justifyContent: "center",
             boxSizing: "border-box",
-            scrollSnapAlign: "start",
           }}
         >
-          <Box
+          <Typography
+            variant="h3"
+            gutterBottom
             sx={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              zIndex: 0,
+              alignSelf: "flex-start",
+              textAlign: "center",
+              mx: "auto",
+              fontWeight: 700,
+              mb: isMobile ? 5 : 8,
             }}
           >
-            <Iridescence
-              color={[0.4, 0.2, 0.5]}
-              mouseReact={false}
-              amplitude={0.1}
-              speed={0.8}
+            <BlurText
+              text="Contact Me"
+              delay={150}
+              animateBy="letters"
+              direction="top"
             />
-          </Box>
-          <GlassSurface width={"auto"} height={600} borderRadius={24}>
+          </Typography>
+          <GlassSurface width={"auto"} height={500} borderRadius={24}>
             <Box
               sx={{
                 position: "relative",
@@ -1095,16 +1107,24 @@ const App: React.FC = () => {
                 ml: 5,
               }}
             >
-              <Typography variant="h3" gutterBottom>
-                Contact Me
-              </Typography>
+              <Box
+                sx={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              ></Box>
               <Typography variant="h6">
                 Feel free to reach out via the form below.
               </Typography>
               <Box
                 component="form"
                 onSubmit={handleContactSubmit}
-                sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 2,
+                  mt: 2,
+                }}
                 noValidate
                 autoComplete="off"
               >
@@ -1150,13 +1170,74 @@ const App: React.FC = () => {
                 )}
                 <Button
                   type="submit"
-                  variant="contained"
-                  color="secondary"
-                  sx={{ mt: 2 }}
+                  variant="outlined"
+                  color="primary"
+                  sx={{
+                    mt: 2,
+                  }}
                   disabled={sending}
                 >
                   {sending ? "Sending…" : "Send Message"}
                 </Button>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Tooltip title="GitHub">
+                    <IconButton
+                      component="a"
+                      href="https://github.com/a97g"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      sx={{
+                        color: "text.primary",
+                        transition: "color 0.3s, transform 0.3s",
+                        "&:hover": {
+                          transform: "scale(1.2)",
+                        },
+                      }}
+                    >
+                      <SiGithub size={28} />
+                    </IconButton>
+                  </Tooltip>
+
+                  <Tooltip title="LinkedIn">
+                    <IconButton
+                      component="a"
+                      href="https://linkedin.com/in/adamgustin"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      sx={{
+                        color: "text.primary",
+                        transition: "color 0.3s, transform 0.3s",
+                        "&:hover": {
+                          transform: "scale(1.2)",
+                        },
+                      }}
+                    >
+                      <SiLinkedin size={28} />
+                    </IconButton>
+                  </Tooltip>
+
+                  <Tooltip title="Email">
+                    <IconButton
+                      component="a"
+                      href="mailto:adamgustin@me.com"
+                      sx={{
+                        color: "text.primary",
+                        transition: "color 0.3s, transform 0.3s",
+                        "&:hover": {
+                          transform: "scale(1.2)",
+                        },
+                      }}
+                    >
+                      <SiGmail size={28} />
+                    </IconButton>
+                  </Tooltip>
+                </Box>
               </Box>
             </Box>
           </GlassSurface>
