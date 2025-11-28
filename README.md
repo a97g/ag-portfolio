@@ -1,69 +1,85 @@
-# React + TypeScript + Vite
+# AG Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repository contains the source code for a personal portfolio website built using modern web development technologies. The portfolio showcases projects, experience, and skills in a visually appealing and interactive manner.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Responsive Design**: Optimized for both desktop and mobile devices.
+- **Interactive Animations**: Smooth transitions and engaging animations.
+- **Dynamic Content**: Projects and experience sections are dynamically rendered.
+- **Modern UI/UX**: Built with Material-UI and custom CSS for a polished look.
 
-## Expanding the ESLint configuration
+## Preview
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+![portfolio preview](https://i.imgur.com/SJvWjqp.png)
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Technologies Used
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+- **React**: Frontend library for building user interfaces.
+- **TypeScript**: Strongly typed programming language for better code quality.
+- **Vite**: Fast build tool for modern web projects.
+- **Material-UI**: Component library for responsive and customizable UI.
+- **CSS Modules**: Scoped and modular CSS for styling.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Getting Started
+
+Follow these instructions to set up and run the project locally.
+
+### Prerequisites
+
+Ensure you have the following installed on your system:
+
+- **Node.js** (v16 or later)
+- **npm** (v8 or later)
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/a97g/ag-portfolio.git
+   ```
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd ag-portfolio
+   ```
+
+3. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+### Running the Project
+
+1. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+2. Open your browser and navigate to:
+
+   ```
+   http://localhost:5173
+   ```
+
+## Project Structure
+
 ```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+portfolio/
+├── public/                 # Static assets
+├── src/                    # Source code
+│   ├── assets/             # Images and other assets
+│   ├── components/         # Reusable components
+│   ├── sections/           # Page sections (Home, Projects, etc.)
+│   ├── App.tsx             # Main app component
+│   ├── main.tsx            # Entry point
+│   └── ...
+├── package.json            # Project metadata and dependencies
+├── tsconfig.json           # TypeScript configuration
+├── vite.config.ts          # Vite configuration
+└── README.md               # Project documentation
 ```
