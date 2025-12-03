@@ -1,6 +1,6 @@
 .logoloop__item::marker {
   display: none;
-  content: '';
+  content: "";
 }
 .logoloop {
   position: relative;
@@ -42,7 +42,7 @@
 }
 
 .logoloop__item:last-child {
-  margin-right: var(--logoloop-gap);
+  margin-right: 0;
 }
 
 .logoloop__node {
@@ -95,7 +95,7 @@
 
 .logoloop--fade::before,
 .logoloop--fade::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   bottom: 0;

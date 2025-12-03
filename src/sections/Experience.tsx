@@ -1,71 +1,17 @@
 import React from "react";
 import { Box, ThemeProvider, Typography } from "@mui/material";
 import type { Theme } from "@mui/material/styles";
-import LogoLoop from "../components/LogoLoop";
 import BlurText from "../components/BlurText";
 import FadeContent from "../components/FadeContent";
-import {
-  FaJava,
-  FaHtml5,
-  FaNodeJs,
-  FaAws,
-  FaGithub,
-  FaDocker,
-} from "react-icons/fa";
-import { IoLogoFirebase } from "react-icons/io5";
-import {
-  SiReact,
-  SiJavascript,
-  SiTypescript,
-  SiJquery,
-  SiSass,
-  SiExpress,
-  SiTailwindcss,
-  SiPython,
-  SiBitbucket,
-  SiBabel,
-  SiFlutter,
-  SiLaravel,
-  SiMysql,
-  SiNextdotjs,
-  SiPhp,
-} from "react-icons/si";
-
-const logos = [
-  { node: <SiReact />, title: "React" },
-  { node: <SiTypescript />, title: "TypeScript" },
-  { node: <SiTailwindcss />, title: "Tailwind CSS" },
-  { node: <FaJava />, title: "Java" },
-  { node: <FaHtml5 />, title: "HTML5" },
-  { node: <SiFlutter />, title: "Flutter" },
-  { node: <SiSass />, title: "Sass" },
-  { node: <SiJquery />, title: "jQuery" },
-  { node: <SiJavascript />, title: "JavaScript" },
-  { node: <SiExpress />, title: "Express.js" },
-  { node: <FaNodeJs />, title: "Node.js" },
-  { node: <IoLogoFirebase />, title: "Firebase" },
-  { node: <FaAws />, title: "AWS" },
-  { node: <SiPython />, title: "Python" },
-  { node: <FaGithub />, title: "GitHub" },
-  { node: <SiBitbucket />, title: "Bitbucket" },
-  { node: <FaDocker />, title: "Docker" },
-  { node: <SiBabel />, title: "Babel" },
-  { node: <SiLaravel />, title: "Laravel" },
-  { node: <SiMysql />, title: "MySql" },
-  { node: <SiNextdotjs />, title: "Node.js" },
-  { node: <SiPhp />, title: "Php" },
-];
 
 const experienceCard = [
   {
-    id: 1,
     title: "Full Stack Developer",
     company: "Dentsu Creative",
     location: "Toronto Ontario",
     timeframe: "2023 - 2025",
     projects: [
       {
-        id: 1,
         title: "General Motors Live",
         technologies:
           "React (TypeScript) / Material UI / Node.js (Express) / Firebase Functions / React Native / Symbl AI",
@@ -81,14 +27,12 @@ const experienceCard = [
     ],
   },
   {
-    id: 2,
     title: "Full Stack Developer",
     company: "DevLift Media",
     location: "London Ontario",
     timeframe: "2020 - 2023",
     projects: [
       {
-        id: 1,
         title: "Glissner",
         technologies: "React (TypeScript) / Material UI / Framer Motion",
         points: [
@@ -97,7 +41,6 @@ const experienceCard = [
         ],
       },
       {
-        id: 2,
         title: "Alexandria",
         technologies: "jQuery / API Integration",
         points: [
@@ -106,7 +49,6 @@ const experienceCard = [
         ],
       },
       {
-        id: 3,
         title: "Baseline Investments",
         technologies: "React (TypeScript) / Redux / Tailwind / Firebase",
         points: [
@@ -115,7 +57,6 @@ const experienceCard = [
         ],
       },
       {
-        id: 4,
         title: "LockDocs",
         technologies: "React (TypeScript) / Material UI / Firebase",
         points: [
@@ -126,14 +67,12 @@ const experienceCard = [
     ],
   },
   {
-    id: 3,
     title: "Full Stack Developer",
     company: "Personal & Commissioned Projects",
     location: "Ontario",
     timeframe: "2019 - ∞",
     projects: [
       {
-        id: 1,
         title: "Varied",
         technologies:
           "Java / Laravel (PHP) / MySQL / React (TypeScript) / Material UI / Firebase",
@@ -201,7 +140,7 @@ export const Experience: React.FC<ExperienceProps> = ({ theme, isMobile }) => {
             {experienceCard.map((xp) => (
               <>
                 <Box
-                  key={xp.id}
+                  key={xp.title}
                   sx={{
                     px: isMobile ? 0 : 3,
                     py: 2,
@@ -246,7 +185,7 @@ export const Experience: React.FC<ExperienceProps> = ({ theme, isMobile }) => {
                       , {xp.location} {isMobile ? <br /> : "-"} {xp.timeframe}
                     </Typography>
                     {xp.projects.map((proj) => (
-                      <div key={proj.id}>
+                      <div key={proj.title}>
                         <Typography
                           variant="h6"
                           sx={{ fontWeight: 300, mb: 2 }}
@@ -301,7 +240,7 @@ export const Experience: React.FC<ExperienceProps> = ({ theme, isMobile }) => {
                   </FadeContent>
                 </Box>
 
-                {xp.id !== experienceCard.length && (
+                {xp.company !== "Personal & Commissioned Projects" && (
                   <Box
                     sx={{
                       height: 5,
@@ -317,33 +256,6 @@ export const Experience: React.FC<ExperienceProps> = ({ theme, isMobile }) => {
               </>
             ))}
           </Box>
-        </Box>
-        <Box
-          sx={{
-            mt: 3,
-            height: "200px",
-            position: "relative",
-            overflow: "hidden",
-            width: "100%",
-          }}
-        >
-          <FadeContent
-            blur={true}
-            duration={500}
-            easing="ease-in"
-            initialOpacity={0}
-          >
-            <LogoLoop
-              logos={logos}
-              speed={90}
-              direction="left"
-              logoHeight={48}
-              gap={50}
-              pauseOnHover
-              scaleOnHover
-              ariaLabel="Skills and Technologies"
-            />
-          </FadeContent>
         </Box>
       </ThemeProvider>
     </Box>

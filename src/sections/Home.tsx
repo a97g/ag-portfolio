@@ -5,11 +5,67 @@ import { BsArrowDownShort } from "react-icons/bs";
 import TextType from "../components/TextType";
 import FadeContent from "../components/FadeContent";
 import cv from "../assets/AdamGustinResume.pdf";
+import LogoLoop from "../components/LogoLoop";
+import {
+  FaJava,
+  FaHtml5,
+  FaNodeJs,
+  FaAws,
+  FaGithub,
+  FaDocker,
+} from "react-icons/fa";
+import { IoLogoFirebase } from "react-icons/io5";
+import {
+  SiReact,
+  SiJavascript,
+  SiTypescript,
+  SiJquery,
+  SiSass,
+  SiExpress,
+  SiTailwindcss,
+  SiPython,
+  SiBitbucket,
+  SiBabel,
+  SiFlutter,
+  SiLaravel,
+  SiMysql,
+  SiNextdotjs,
+  SiPhp,
+  SiPostgresql,
+  SiPrisma,
+} from "react-icons/si";
 
 interface HomeProps {
   theme: Theme;
   isMobile: boolean;
 }
+
+const logos = [
+  { node: <SiReact />, title: "React" },
+  { node: <SiTypescript />, title: "TypeScript" },
+  { node: <SiTailwindcss />, title: "Tailwind CSS" },
+  { node: <FaJava />, title: "Java" },
+  { node: <FaHtml5 />, title: "HTML5" },
+  { node: <SiFlutter />, title: "Flutter" },
+  { node: <SiSass />, title: "Sass" },
+  { node: <SiJquery />, title: "jQuery" },
+  { node: <SiJavascript />, title: "JavaScript" },
+  { node: <SiExpress />, title: "Express.js" },
+  { node: <FaNodeJs />, title: "Node.js" },
+  { node: <IoLogoFirebase />, title: "Firebase" },
+  { node: <FaAws />, title: "AWS" },
+  { node: <SiPython />, title: "Python" },
+  { node: <FaGithub />, title: "GitHub" },
+  { node: <SiBitbucket />, title: "Bitbucket" },
+  { node: <FaDocker />, title: "Docker" },
+  { node: <SiBabel />, title: "Babel" },
+  { node: <SiLaravel />, title: "Laravel" },
+  { node: <SiMysql />, title: "MySql" },
+  { node: <SiPostgresql />, title: "PostgreSQL" },
+  { node: <SiPrisma />, titel: "Prisma" },
+  { node: <SiNextdotjs />, title: "Node.js" },
+  { node: <SiPhp />, title: "Php" },
+];
 
 export const Home: React.FC<HomeProps> = ({ theme, isMobile }) => {
   return (
@@ -25,7 +81,14 @@ export const Home: React.FC<HomeProps> = ({ theme, isMobile }) => {
         justifyContent: "center",
       }}
     >
-      <Box sx={{ position: "relative", zIndex: 1, textAlign: "center" }}>
+      <Box
+        sx={{
+          position: "relative",
+          zIndex: 1,
+          textAlign: "center",
+          display: "flex",
+        }}
+      >
         <FadeContent
           blur={true}
           duration={1000}
@@ -36,7 +99,7 @@ export const Home: React.FC<HomeProps> = ({ theme, isMobile }) => {
           <Box
             sx={{
               position: "absolute",
-              bottom: -350,
+              bottom: -250,
               left: "48%",
               transform: "translateX(-50%)",
               animation: "bounce 2s infinite",
@@ -97,6 +160,33 @@ export const Home: React.FC<HomeProps> = ({ theme, isMobile }) => {
               Contact Me
             </Button>
           </Box>
+        </FadeContent>
+      </Box>
+      <Box
+        sx={{
+          height: "150px",
+          position: "absolute",
+          bottom: 0,
+          overflow: "hidden",
+          width: "100%",
+        }}
+      >
+        <FadeContent
+          blur={true}
+          duration={500}
+          easing="ease-in"
+          initialOpacity={0}
+        >
+          <LogoLoop
+            logos={logos}
+            speed={90}
+            direction="left"
+            logoHeight={48}
+            gap={50}
+            pauseOnHover
+            scaleOnHover
+            ariaLabel="Skills and Technologies"
+          />
         </FadeContent>
       </Box>
     </Box>
